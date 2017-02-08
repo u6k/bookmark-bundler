@@ -2,19 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>me.u6k.bookmark-bundle</groupId>
-    <artifactId>bookmark-bundle</artifactId>
+    <groupId>me.u6k.bookmark-bundler</groupId>
+    <artifactId>bookmark-bundler</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <url>https://u6k.github.io/bookmark-bundle/</url>
+    <url>https://u6k.github.io/bookmark-bundler/</url>
 
     <issueManagement>
-        <url>https://redmine.u6k.me/projects/bookmark-bundle</url>
+        <url>https://redmine.u6k.me/projects/bookmark-bundler</url>
         <system>Redmine</system>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/u6k/bookmark-bundle</url>
-        <connection>scm:git:git@github.com:u6k/bookmark-bundle.git</connection>
+        <url>https://github.com/u6k/bookmark-bundler</url>
+        <connection>scm:git:git@github.com:u6k/bookmark-bundler.git</connection>
     </scm>
 
     <licenses>
