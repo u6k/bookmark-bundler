@@ -19,6 +19,7 @@ compile:
 test:
     override:
         - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev mvn clean package site
+        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev aglio -i src/site/api-blueprint/api-reference.md -o target/site/api-reference.html
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/junit/
         - find . -type f -regex ".*/target/surefire-reports/.*\.xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
