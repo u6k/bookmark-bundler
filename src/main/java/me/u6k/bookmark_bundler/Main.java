@@ -1,10 +1,22 @@
 
 package me.u6k.bookmark_bundler;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@SpringBootApplication
 public class Main {
 
+    @RequestMapping("/")
+    public String index() {
+        return "hello";
+    }
+
     public static void main(String[] args) {
-        System.out.println("hello");
+        SpringApplication.run(Main.class, args);
     }
 
 }
