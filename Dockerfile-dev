@@ -1,0 +1,16 @@
+FROM java:8
+MAINTAINER u6k.apps@gmail.com
+
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
+    apt-get update && \
+    apt-get install -y maven build-essential nodejs && \
+    apt-get clean && \
+    npm install -g aglio api-mock && \
+    mkdir -p /var/my-app
+
+WORKDIR /var/my-app
+
+EXPOSE 3000
+EXPOSE 8080
+
+CMD ["bash"]

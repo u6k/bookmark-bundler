@@ -1,0 +1,34 @@
+machine:
+    timezone: Asia/Tokyo
+    services:
+        - docker
+
+dependencies:
+    override:
+        - mvn package site -Dmaven.test.skip=true -Dmaven.site.skip=true
+
+compile:
+    pre:
+        - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+        - docker pull u6kapps/bookmark-bundler-dev || true
+    override:
+        - docker build -t u6kapps/bookmark-bundler-dev -f Dockerfile-dev .
+    post:
+        - docker push u6kapps/bookmark-bundler-dev
+
+test:
+    override:
+        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev mvn clean package site
+    post:
+        - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+        - find . -type f -regex ".*/target/surefire-reports/.*\.xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+        - find . -type f -regex ".*/target/.*\.jar" -exec cp {} $CIRCLE_ARTIFACTS/ \;
+        - cp -r target/site/ $CIRCLE_ARTIFACTS/site/
+
+deployment:
+    release:
+        tag: /.+/
+        commands:
+            - docker build -t u6kapps/bookmark-bundler .
+            - docker tag u6kapps/bookmark-bundler u6kapps/bookmark-bundler:$CIRCLE_TAG
+            - docker push u6kapps/bookmark-bundler
