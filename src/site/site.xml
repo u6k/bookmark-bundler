@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="${project.name}">
+    <body>
+        <links>
+            <item name="${project.name}" href="${project.url}" />
+        </links>
+        <menu name="Menu">
+            <item name="REST API" href="api-reference.html" />
+        </menu>
+        <menu ref="parent" />
+        <menu ref="modules" />
+        <menu ref="reports" />
+    </body>
+</project>
