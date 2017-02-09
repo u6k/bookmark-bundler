@@ -44,6 +44,22 @@ public class BookmarkController {
         return newBookmarkVO;
     }
 
+    @RequestMapping(value = "/bookmarks/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public BookmarkVO update(@PathVariable String id, @RequestBody BookmarkVO bookmarkVO) {
+        L.debug("#update: bookmarkVO={}", bookmarkVO);
+
+        if (bookmarkVO == null) {
+            throw new IllegalArgumentException("bookmarkVO is null.");
+        }
+
+        Bookmark updatedBookmark = this.service.update(id, bookmarkVO.getName(), bookmarkVO.getUrl());
+
+        BookmarkVO updatedBookmarkVO = new BookmarkVO(updatedBookmark);
+
+        return updatedBookmarkVO;
+    }
+
     @RequestMapping(value = "/bookmarks", method = RequestMethod.GET)
     @ResponseBody
     public List<BookmarkVO> findAll() {
