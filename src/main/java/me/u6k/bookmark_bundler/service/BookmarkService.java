@@ -59,4 +59,16 @@ public class BookmarkService {
         return l;
     }
 
+    public Bookmark findOne(String id) {
+        L.debug("#findOne: id={}", id);
+
+        if (StringUtils.isEmpty(id)) {
+            return null;
+        }
+
+        Bookmark b = this.bookmarkRepo.findOne(id);
+
+        return b;
+    }
+
 }

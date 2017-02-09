@@ -73,7 +73,7 @@ public class BookmarkControllerTest {
     }
 
     @Test
-    public void create_引数が空の場合400_1() throws Exception {
+    public void create_引数が空の場合は400_1() throws Exception {
         // 準備
         String name = "";
         String url = "https://example.com/test";
@@ -97,7 +97,7 @@ public class BookmarkControllerTest {
     }
 
     @Test
-    public void create_引数が空の場合400_2() throws Exception {
+    public void create_引数が空の場合は400_2() throws Exception {
         // 準備
         String url = "https://example.com/test";
 
@@ -120,7 +120,7 @@ public class BookmarkControllerTest {
     }
 
     @Test
-    public void create_引数が空の場合400_3() throws Exception {
+    public void create_引数が空の場合は400_3() throws Exception {
         // 準備
         String name = "テスト　サイト";
         String url = "";
@@ -144,7 +144,7 @@ public class BookmarkControllerTest {
     }
 
     @Test
-    public void create_引数が空の場合400_4() throws Exception {
+    public void create_引数が空の場合は400_4() throws Exception {
         // 準備
         String name = "テスト　サイト";
 
@@ -167,7 +167,7 @@ public class BookmarkControllerTest {
     }
 
     @Test
-    public void create_URLが重複() throws Exception {
+    public void create_URLが重複した場合は400() throws Exception {
         // 準備1
         String name1 = "テスト　サイト1";
         String url1 = "https://example.com/test1";
