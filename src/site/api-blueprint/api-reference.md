@@ -59,7 +59,7 @@ Bookmarkが0個の場合、空配列`[]`を返します。
 ## Bookmark [/bookmarks/{bookmark_id}]
 
 + Parameters
-    + bookmark_id: `acf1c578-c562-42ca-a2a2-d9da6ac19d0a` (uuid) - Bookmarkの識別子。空、存在しない値を指定した場合、`400 Bad Request`を返します。
+    + bookmark_id: `acf1c578-c562-42ca-a2a2-d9da6ac19d0a` (uuid) - Bookmarkの識別子。指定したidのBookmarkが存在しない場合、`404 Not Found`を返します。
 
 ### Bookmarkを取得 [GET]
 
@@ -72,3 +72,30 @@ Bookmarkを取得します。
             "name":"u6k.Blog()",
             "url":"http://blog.u6k.me/"
         }
+
+### Bookmarkを変更 [PUT]
+
+Bookmarkの内容を変更します。
+
+リクエストはBookmarkの全ての項目を指定してください。指定されない項目は未設定になります。必須項目を指定しなかった場合、`400 Bad Request`を返します。設定しようとしたURLが既に存在する場合、`400 Bad Request`を返します。
+
++ Request (application/json)
+
+        {
+            "name":"u6k.Redmine()",
+            "url":"http://redmine.u6k.me/"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "id":"acf1c578-c562-42ca-a2a2-d9da6ac19d0a",
+            "name":"u6k.Redmine()",
+            "url":"http://redmine.u6k.me/"
+        }
+
+### Bookmarkを削除 [DELETE]
+
+Bookmarkを削除します。
+
++ Response 204
