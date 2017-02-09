@@ -60,6 +60,14 @@ public class BookmarkController {
         return updatedBookmarkVO;
     }
 
+    @RequestMapping(value = "/bookmarks/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable String id) {
+        L.debug("#delete: id={}", id);
+
+        this.service.delete(id);
+    }
+
     @RequestMapping(value = "/bookmarks", method = RequestMethod.GET)
     @ResponseBody
     public List<BookmarkVO> findAll() {

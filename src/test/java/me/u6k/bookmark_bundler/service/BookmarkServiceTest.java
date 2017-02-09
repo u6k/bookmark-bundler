@@ -541,4 +541,120 @@ public class BookmarkServiceTest {
         assertThat(b.getUrl(), is("https://example.com/test"));
     }
 
+    @Test
+    public void delete_正常() throws Exception {
+        // 準備
+        Bookmark b1 = this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        Bookmark b2 = this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        Bookmark b3 = this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        Bookmark b4 = this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        Bookmark b5 = this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+
+        // 実行
+        this.bookmarkService.delete(b3.getId());
+
+        // 結果確認
+        List<Bookmark> l = this.bookmarkService.findAll();
+
+        assertThat(l.size(), is(4));
+        assertThat(l.get(0), is(b5));
+        assertThat(l.get(1), is(b4));
+        assertThat(l.get(2), is(b2));
+        assertThat(l.get(3), is(b1));
+
+        l = this.bookmarkRepo.findAll();
+
+        assertThat(l.size(), is(4));
+        assertThat(l.get(0), is(b5));
+        assertThat(l.get(1), is(b4));
+        assertThat(l.get(2), is(b2));
+        assertThat(l.get(3), is(b1));
+    }
+
+    @Test
+    public void delete_引数が空の場合はIllegalArgumentException_1() throws Exception {
+        // 準備
+        Bookmark b1 = this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        Bookmark b2 = this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        Bookmark b3 = this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        Bookmark b4 = this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        Bookmark b5 = this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+
+        try {
+            // 実行
+            this.bookmarkService.delete(null);
+
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertThat(e.getMessage(), is("id is blank."));
+        }
+
+        List<Bookmark> l = this.bookmarkRepo.findAll();
+
+        assertThat(l.size(), is(5));
+        assertThat(l.get(0), is(b5));
+        assertThat(l.get(1), is(b4));
+        assertThat(l.get(2), is(b3));
+        assertThat(l.get(3), is(b2));
+        assertThat(l.get(4), is(b1));
+    }
+
+    @Test
+    public void delete_引数が空の場合はIllegalArgumentException_2() throws Exception {
+        // 準備
+        Bookmark b1 = this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        Bookmark b2 = this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        Bookmark b3 = this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        Bookmark b4 = this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        Bookmark b5 = this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+
+        try {
+            // 実行
+            this.bookmarkService.delete("");
+
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertThat(e.getMessage(), is("id is blank."));
+        }
+
+        List<Bookmark> l = this.bookmarkRepo.findAll();
+
+        assertThat(l.size(), is(5));
+        assertThat(l.get(0), is(b5));
+        assertThat(l.get(1), is(b4));
+        assertThat(l.get(2), is(b3));
+        assertThat(l.get(3), is(b2));
+        assertThat(l.get(4), is(b1));
+    }
+
+    @Test
+    public void delete_該当Bookmarkが存在しない場合はBookmarkNotFoundException() throws Exception {
+        // 準備
+        Bookmark b1 = this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        Bookmark b2 = this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        Bookmark b3 = this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        Bookmark b4 = this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        Bookmark b5 = this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+
+        String ngId = UUID.randomUUID().toString();
+
+        try {
+            // 実行
+            this.bookmarkService.delete(ngId);
+
+            fail();
+        } catch (BookmarkNotFoundException e) {
+            assertThat(e.getMessage(), is("bookmark.id=" + ngId + " not found."));
+        }
+
+        List<Bookmark> l = this.bookmarkRepo.findAll();
+
+        assertThat(l.size(), is(5));
+        assertThat(l.get(0), is(b5));
+        assertThat(l.get(1), is(b4));
+        assertThat(l.get(2), is(b3));
+        assertThat(l.get(3), is(b2));
+        assertThat(l.get(4), is(b1));
+    }
+
 }
