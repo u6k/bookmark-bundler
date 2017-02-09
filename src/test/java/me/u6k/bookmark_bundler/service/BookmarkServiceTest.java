@@ -4,8 +4,6 @@ package me.u6k.bookmark_bundler.service;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import javax.transaction.Transactional;
-
 import me.u6k.bookmark_bundler.exception.BookmarkDuplicateException;
 import me.u6k.bookmark_bundler.model.Bookmark;
 import me.u6k.bookmark_bundler.model.BookmarkRepository;
@@ -15,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
