@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import me.u6k.bookmark_bundler.exception.BookmarkDuplicateException;
+import me.u6k.bookmark_bundler.exception.BookmarkNotFoundException;
 import me.u6k.bookmark_bundler.model.Bookmark;
 import me.u6k.bookmark_bundler.model.BookmarkRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -41,6 +42,43 @@ public class BookmarkService {
         // 新規登録
         Bookmark b = new Bookmark();
         b.setId(UUID.randomUUID().toString());
+        b.setName(name.trim());
+        b.setUrl(url.trim());
+
+        this.bookmarkRepo.save(b);
+
+        L.debug("bookmark={}", b);
+
+        return b;
+    }
+
+    public Bookmark update(String id, String name, String url) {
+        L.debug("#update: id={}, name={}, url={}", id, name, url);
+
+        // 入力チェック
+        if (StringUtils.isBlank(id)) {
+            throw new IllegalArgumentException("id is blank.");
+        }
+        if (StringUtils.isBlank(name)) {
+            throw new IllegalArgumentException("name is blank.");
+        }
+        if (StringUtils.isBlank(url)) {
+            throw new IllegalArgumentException("url is blank.");
+        }
+
+        // 更新対象のBookmarkを取得
+        Bookmark b = this.findOne(id);
+        if (b == null) {
+            throw new BookmarkNotFoundException(id);
+        }
+
+        // URL重複チェック
+        int count = this.bookmarkRepo.countByUrl(url);
+        if (count > 0) {
+            throw new BookmarkDuplicateException(url);
+        }
+
+        // 更新
         b.setName(name.trim());
         b.setUrl(url.trim());
 
