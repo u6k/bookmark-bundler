@@ -4,6 +4,8 @@ package me.u6k.bookmark_bundler.service;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import me.u6k.bookmark_bundler.exception.BookmarkDuplicateException;
 import me.u6k.bookmark_bundler.model.Bookmark;
 import me.u6k.bookmark_bundler.model.BookmarkRepository;
@@ -192,6 +194,49 @@ public class BookmarkServiceTest {
         assertThat(b.getName(), is("テスト　サイト1"));
         assertThat(b.getUrl(), is("https://example.com/test1"));
         assertNotNull(b.getUpdated());
+    }
+
+    @Test
+    public void findAll_正常_0個() {
+        // 実行
+        List<Bookmark> l = this.bookmarkService.findAll();
+
+        // 結果確認
+        assertThat(l.size(), is(0));
+    }
+
+    @Test
+    public void findAll_正常_1個() {
+        // 準備
+        Bookmark b1 = this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+
+        // 実行
+        List<Bookmark> l = this.bookmarkService.findAll();
+
+        // 結果確認
+        assertThat(l.size(), is(1));
+        assertThat(l.get(0), is(b1));
+    }
+
+    @Test
+    public void findAll_正常_複数個() {
+        // 準備
+        Bookmark b1 = this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        Bookmark b2 = this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        Bookmark b3 = this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        Bookmark b4 = this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        Bookmark b5 = this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+
+        // 実行
+        List<Bookmark> l = this.bookmarkService.findAll();
+
+        // 結果確認
+        assertThat(l.size(), is(5));
+        assertThat(l.get(0), is(b5));
+        assertThat(l.get(1), is(b4));
+        assertThat(l.get(2), is(b3));
+        assertThat(l.get(3), is(b2));
+        assertThat(l.get(4), is(b1));
     }
 
 }
