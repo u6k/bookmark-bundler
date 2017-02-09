@@ -1,6 +1,7 @@
 
 package me.u6k.bookmark_bundler.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import me.u6k.bookmark_bundler.exception.BookmarkDuplicateException;
@@ -48,6 +49,14 @@ public class BookmarkService {
         L.debug("bookmark={}", b);
 
         return b;
+    }
+
+    public List<Bookmark> findAll() {
+        L.debug("#findAll");
+
+        List<Bookmark> l = this.bookmarkRepo.findAll();
+
+        return l;
     }
 
 }
