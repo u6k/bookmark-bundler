@@ -56,6 +56,30 @@ Bookmarkが0個の場合、空配列`[]`を返します。
             "url":"http://blog.u6k.me/"
         }
 
+
+## Search Bookmark [/bookmarks?keyword={keyword}]
+
++ Parameters
+    + keyword: github (string, optional) - キーワード
+
+### キーワードを指定してBookmarkを検索 [GET]
+
+キーワードを指定して、Bookmarkを検索します。更新日の降順に返します。
+
+キーワードが空の場合、空で検索します。
+
+検索結果が0個の場合、空配列`[]`を返します。
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id":"f45b94dc-74f3-4581-b4bd-d96fbcc9a101",
+                "name":"bookmark-bundler API仕様",
+                "url":"https://u6k.github.io/bookmark-bundler/"
+            }
+        ]
+
 ## Bookmark [/bookmarks/{bookmark_id}]
 
 + Parameters
