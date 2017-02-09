@@ -1,3 +1,5 @@
 me.u6k.bookmark_bundler
 me.u6k.bookmark_bundler.controller
+me.u6k.bookmark_bundler.exception
+me.u6k.bookmark_bundler.model
 me.u6k.bookmark_bundler.service
