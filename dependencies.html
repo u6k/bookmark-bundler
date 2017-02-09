@@ -26,7 +26,7 @@
           
                 <div class="xleft">
         <span id="publishDate">Last Published: 2017-02-09</span>
-                  &nbsp;| <span id="projectVersion">Version: 0.1.0</span>
+                  &nbsp;| <span id="projectVersion">Version: 0.2.0</span>
                       </div>
             <div class="xright">                    <a href="./" title="bookmark-bundler">bookmark-bundler</a>
             
@@ -597,7 +597,7 @@
 <div class="section">
 <h3><a name="Dependency_Tree"></a>Dependency Tree</h3>
 <ul>
-<li>me.u6k.bookmark-bundler:bookmark-bundler:jar:0.1.0 <img id="_img1" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep0', '_img1' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep0" style="display:none">
+<li>me.u6k.bookmark-bundler:bookmark-bundler:jar:0.2.0 <img id="_img1" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep0', '_img1' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep0" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>bookmark-bundler</th></tr>
@@ -2011,52 +2011,62 @@ accessors-smart use ASM to speed up those calls.</p>
 <th>Repo ID</th>
 <th>URL</th>
 <th>Release</th>
-<th>Snapshot</th></tr>
+<th>Snapshot</th>
+<th>Blacklisted</th></tr>
 <tr class="b">
 <td>central</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2">https://repo.maven.apache.org/maven2</a></td>
 <td>Yes</td>
+<td>No</td>
 <td>No</td></tr>
 <tr class="a">
 <td>spring-milestones</td>
 <td><a class="externalLink" href="http://repo.spring.io/milestone">http://repo.spring.io/milestone</a></td>
 <td>Yes</td>
+<td>No</td>
 <td>No</td></tr>
 <tr class="b">
 <td>ow2-snapshot</td>
 <td><a class="externalLink" href="http://repository.ow2.org/nexus/content/repositories/snapshots">http://repository.ow2.org/nexus/content/repositories/snapshots</a></td>
 <td>No</td>
-<td>Yes</td></tr>
+<td>Yes</td>
+<td>No</td></tr>
 <tr class="a">
 <td>spring-snapshots</td>
 <td><a class="externalLink" href="http://repo.spring.io/snapshot">http://repo.spring.io/snapshot</a></td>
 <td>Yes</td>
-<td>Yes</td></tr>
+<td>Yes</td>
+<td>No</td></tr>
 <tr class="b">
 <td>spring-ext</td>
 <td><a class="externalLink" href="http://repo.spring.io/ext-release-local/">http://repo.spring.io/ext-release-local/</a></td>
 <td>Yes</td>
+<td>No</td>
 <td>No</td></tr>
 <tr class="a">
 <td>spring-libs-release</td>
 <td><a class="externalLink" href="https://repo.spring.io/libs-release">https://repo.spring.io/libs-release</a></td>
+<td>Yes</td>
 <td>Yes</td>
 <td>Yes</td></tr>
 <tr class="b">
 <td>sonatype-nexus-snapshots</td>
 <td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/snapshots">https://oss.sonatype.org/content/repositories/snapshots</a></td>
 <td>No</td>
-<td>Yes</td></tr>
+<td>Yes</td>
+<td>No</td></tr>
 <tr class="a">
 <td>jvnet-nexus-snapshots</td>
 <td><a class="externalLink" href="https://maven.java.net/content/repositories/snapshots">https://maven.java.net/content/repositories/snapshots</a></td>
 <td>No</td>
-<td>Yes</td></tr>
+<td>Yes</td>
+<td>No</td></tr>
 <tr class="b">
 <td>apache.snapshots</td>
 <td><a class="externalLink" href="http://repository.apache.org/snapshots">http://repository.apache.org/snapshots</a></td>
 <td>No</td>
-<td>Yes</td></tr></table>
+<td>Yes</td>
+<td>No</td></tr></table>
 <p>Repository locations for each of the Dependencies.</p>
 <table border="0" class="bodyTable">
 <tr class="a">
@@ -2066,7 +2076,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <th>ow2-snapshot</th>
 <th>spring-snapshots</th>
 <th>spring-ext</th>
-<th>spring-libs-release</th>
 <th>sonatype-nexus-snapshots</th>
 <th>jvnet-nexus-snapshots</th>
 <th>apache.snapshots</th></tr>
@@ -2077,7 +2086,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/antlr/antlr/2.7.7/antlr-2.7.7.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2088,7 +2096,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/ch/qos/logback/logback-classic/1.1.8/logback-classic-1.1.8.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2099,7 +2106,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/ch/qos/logback/logback-core/1.1.8/logback-core-1.1.8.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2110,7 +2116,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/com/fasterxml/classmate/1.3.3/classmate-1.3.3.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2121,7 +2126,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/com/fasterxml/jackson/core/jackson-annotations/2.8.5/jackson-annotations-2.8.5.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2132,7 +2136,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/com/fasterxml/jackson/core/jackson-core/2.8.5/jackson-core-2.8.5.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2143,7 +2146,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/com/fasterxml/jackson/core/jackson-databind/2.8.5/jackson-databind-2.8.5.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2154,7 +2156,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/com/jayway/jsonpath/json-path/2.2.0/json-path-2.2.0.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2165,7 +2166,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2176,7 +2176,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/javax/transaction/javax.transaction-api/1.2/javax.transaction-api-1.2.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2187,7 +2186,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/javax/validation/validation-api/1.1.0.Final/validation-api-1.1.0.Final.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2198,7 +2196,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/junit/junit/4.12/junit-4.12.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2209,7 +2206,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/net/minidev/accessors-smart/1.1/accessors-smart-1.1.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2220,7 +2216,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/net/minidev/json-smart/2.2.1/json-smart-2.2.1.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2231,7 +2226,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2242,7 +2236,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2253,7 +2246,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/apache/tomcat/tomcat-jdbc/8.5.6/tomcat-jdbc-8.5.6.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2264,7 +2256,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/apache/tomcat/tomcat-juli/8.5.6/tomcat-juli-8.5.6.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2275,7 +2266,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/apache/tomcat/embed/tomcat-embed-core/8.5.6/tomcat-embed-core-8.5.6.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2286,7 +2276,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/apache/tomcat/embed/tomcat-embed-el/8.5.6/tomcat-embed-el-8.5.6.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2297,7 +2286,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/apache/tomcat/embed/tomcat-embed-websocket/8.5.6/tomcat-embed-websocket-8.5.6.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2308,7 +2296,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/aspectj/aspectjweaver/1.8.9/aspectjweaver-1.8.9.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2319,7 +2306,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/assertj/assertj-core/2.5.0/assertj-core-2.5.0.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2330,7 +2316,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2341,7 +2326,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/hamcrest/hamcrest-library/1.3/hamcrest-library-1.3.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2352,7 +2336,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/hibernate/hibernate-core/5.0.11.Final/hibernate-core-5.0.11.Final.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2363,7 +2346,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/hibernate/hibernate-entitymanager/5.0.11.Final/hibernate-entitymanager-5.0.11.Final.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2374,7 +2356,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/hibernate/hibernate-validator/5.2.4.Final/hibernate-validator-5.2.4.Final.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2385,7 +2366,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/hibernate/common/hibernate-commons-annotations/5.0.1.Final/hibernate-commons-annotations-5.0.1.Final.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2396,7 +2376,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/hibernate/javax/persistence/hibernate-jpa-2.1-api/1.0.0.Final/hibernate-jpa-2.1-api-1.0.0.Final.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2407,7 +2386,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/javassist/javassist/3.20.0-GA/javassist-3.20.0-GA.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2418,7 +2396,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/jboss/jandex/2.0.0.Final/jandex-2.0.0.Final.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2429,7 +2406,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/jboss/logging/jboss-logging/3.3.0.Final/jboss-logging-3.3.0.Final.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2440,7 +2416,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/json/json/20140107/json-20140107.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2451,7 +2426,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/mockito/mockito-core/1.10.19/mockito-core-1.10.19.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2462,7 +2436,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/objenesis/objenesis/2.1/objenesis-2.1.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2473,7 +2446,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/ow2/asm/asm/5.0.3/asm-5.0.3.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2484,7 +2456,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/skyscreamer/jsonassert/1.3.0/jsonassert-1.3.0.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2495,7 +2466,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/slf4j/jcl-over-slf4j/1.7.22/jcl-over-slf4j-1.7.22.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2506,7 +2476,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/slf4j/jul-to-slf4j/1.7.22/jul-to-slf4j-1.7.22.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2517,7 +2486,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/slf4j/log4j-over-slf4j/1.7.22/log4j-over-slf4j-1.7.22.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2528,7 +2496,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/slf4j/slf4j-api/1.7.22/slf4j-api-1.7.22.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2539,7 +2506,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/spring-aop/4.3.5.RELEASE/spring-aop-4.3.5.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2550,7 +2516,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/spring-aspects/4.3.5.RELEASE/spring-aspects-4.3.5.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2561,7 +2526,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/spring-beans/4.3.5.RELEASE/spring-beans-4.3.5.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2572,7 +2536,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/spring-context/4.3.5.RELEASE/spring-context-4.3.5.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2583,7 +2546,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/spring-core/4.3.5.RELEASE/spring-core-4.3.5.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2594,7 +2556,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/spring-expression/4.3.5.RELEASE/spring-expression-4.3.5.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2605,7 +2566,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/spring-jdbc/4.3.5.RELEASE/spring-jdbc-4.3.5.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2616,7 +2576,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/spring-orm/4.3.5.RELEASE/spring-orm-4.3.5.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2627,7 +2586,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/spring-test/4.3.5.RELEASE/spring-test-4.3.5.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2638,7 +2596,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/spring-tx/4.3.5.RELEASE/spring-tx-4.3.5.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2649,7 +2606,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/spring-web/4.3.5.RELEASE/spring-web-4.3.5.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2660,7 +2616,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/spring-webmvc/4.3.5.RELEASE/spring-webmvc-4.3.5.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2671,7 +2626,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/boot/spring-boot/1.4.3.RELEASE/spring-boot-1.4.3.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2682,7 +2636,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/boot/spring-boot-autoconfigure/1.4.3.RELEASE/spring-boot-autoconfigure-1.4.3.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2693,7 +2646,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/boot/spring-boot-starter/1.4.3.RELEASE/spring-boot-starter-1.4.3.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2704,7 +2656,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/boot/spring-boot-starter-aop/1.4.3.RELEASE/spring-boot-starter-aop-1.4.3.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2715,7 +2666,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/boot/spring-boot-starter-data-jpa/1.4.3.RELEASE/spring-boot-starter-data-jpa-1.4.3.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2726,7 +2676,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/boot/spring-boot-starter-jdbc/1.4.3.RELEASE/spring-boot-starter-jdbc-1.4.3.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2737,7 +2686,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/boot/spring-boot-starter-logging/1.4.3.RELEASE/spring-boot-starter-logging-1.4.3.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2748,7 +2696,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/boot/spring-boot-starter-test/1.4.3.RELEASE/spring-boot-starter-test-1.4.3.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2759,7 +2706,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/boot/spring-boot-starter-tomcat/1.4.3.RELEASE/spring-boot-starter-tomcat-1.4.3.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2770,7 +2716,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/boot/spring-boot-starter-web/1.4.3.RELEASE/spring-boot-starter-web-1.4.3.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2781,7 +2726,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/boot/spring-boot-test/1.4.3.RELEASE/spring-boot-test-1.4.3.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2792,7 +2736,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/boot/spring-boot-test-autoconfigure/1.4.3.RELEASE/spring-boot-test-autoconfigure-1.4.3.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2803,7 +2746,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/data/spring-data-commons/1.12.6.RELEASE/spring-data-commons-1.12.6.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2814,7 +2756,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/springframework/data/spring-data-jpa/1.10.6.RELEASE/spring-data-jpa-1.10.6.RELEASE.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2825,7 +2766,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/org/yaml/snakeyaml/1.17/snakeyaml-1.17.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2836,7 +2776,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://repo.spring.io/libs-release/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar"><img alt="Found at https://repo.spring.io/libs-release" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -2847,7 +2786,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <th>ow2-snapshot</th>
 <th>spring-snapshots</th>
 <th>spring-ext</th>
-<th>spring-libs-release</th>
 <th>sonatype-nexus-snapshots</th>
 <th>jvnet-nexus-snapshots</th>
 <th>apache.snapshots</th></tr>
@@ -2858,7 +2796,6 @@ accessors-smart use ASM to speed up those calls.</p>
 <td>0</td>
 <td>0</td>
 <td>0</td>
-<td>70</td>
 <td>0</td>
 <td>0</td>
 <td>0</td></tr></table></div>
