@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.UUID;
+
 import me.u6k.bookmark_bundler.model.Bookmark;
 import me.u6k.bookmark_bundler.model.BookmarkRepository;
 import me.u6k.bookmark_bundler.service.BookmarkService;
@@ -73,7 +75,7 @@ public class BookmarkControllerTest {
     }
 
     @Test
-    public void create_引数が空の場合400_1() throws Exception {
+    public void create_引数が空の場合は400_1() throws Exception {
         // 準備
         String name = "";
         String url = "https://example.com/test";
@@ -97,7 +99,7 @@ public class BookmarkControllerTest {
     }
 
     @Test
-    public void create_引数が空の場合400_2() throws Exception {
+    public void create_引数が空の場合は400_2() throws Exception {
         // 準備
         String url = "https://example.com/test";
 
@@ -120,7 +122,7 @@ public class BookmarkControllerTest {
     }
 
     @Test
-    public void create_引数が空の場合400_3() throws Exception {
+    public void create_引数が空の場合は400_3() throws Exception {
         // 準備
         String name = "テスト　サイト";
         String url = "";
@@ -144,7 +146,7 @@ public class BookmarkControllerTest {
     }
 
     @Test
-    public void create_引数が空の場合400_4() throws Exception {
+    public void create_引数が空の場合は400_4() throws Exception {
         // 準備
         String name = "テスト　サイト";
 
@@ -167,7 +169,7 @@ public class BookmarkControllerTest {
     }
 
     @Test
-    public void create_URLが重複() throws Exception {
+    public void create_URLが重複した場合は400() throws Exception {
         // 準備1
         String name1 = "テスト　サイト1";
         String url1 = "https://example.com/test1";
@@ -276,6 +278,48 @@ public class BookmarkControllerTest {
                         .andExpect(jsonPath("$[4].name", is("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル")))
                         .andExpect(jsonPath("$[4].url", is("http://www.asahi.com/articles/ASK29336BK29UTFK001.html")))
                         .andExpect(jsonPath("$[5]").doesNotExist());
+    }
+
+    @Test
+    public void findOne_正常() throws Exception {
+        // 準備
+        this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        Bookmark b3 = this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+
+        // 実行
+        ResultActions result = this.mvc.perform(get("/bookmarks/" + b3.getId()));
+
+        // 結果確認
+        MockHttpServletResponse response = result.andReturn().getResponse();
+        L.debug("response: status={}, body={}", response.getStatus(), response.getContentAsString());
+
+        result.andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=UTF-8"))
+                        .andExpect(jsonPath("$.id", is(b3.getId())))
+                        .andExpect(jsonPath("$.name", is("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル")))
+                        .andExpect(jsonPath("$.url", is("http://www.asahi.com/articles/ASK292TYJK29OIPE006.html")));
+    }
+
+    @Test
+    public void findOne_該当Bookmarkが存在しない場合は404() throws Exception {
+        // 準備
+        this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+
+        // 実行
+        ResultActions result = this.mvc.perform(get("/bookmarks/" + UUID.randomUUID().toString()));
+
+        // 結果確認
+        MockHttpServletResponse response = result.andReturn().getResponse();
+        L.debug("response: status={}, body={}", response.getStatus(), response.getContentAsString());
+
+        result.andExpect(status().isNotFound());
     }
 
 }

@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.UUID;
 
 import me.u6k.bookmark_bundler.exception.BookmarkDuplicateException;
 import me.u6k.bookmark_bundler.model.Bookmark;
@@ -52,7 +53,7 @@ public class BookmarkServiceTest {
     }
 
     @Test
-    public void create_引数がblank_1() {
+    public void create_引数がblankの場合はIllegalArgumentException_1() {
         // 準備
         String name = null;
         String url = "https://example.com/test";
@@ -71,7 +72,7 @@ public class BookmarkServiceTest {
     }
 
     @Test
-    public void create_引数がblank_2() {
+    public void create_引数がblankの場合はIllegalArgumentException_2() {
         // 準備
         String name = "";
         String url = "https://example.com/test";
@@ -90,7 +91,7 @@ public class BookmarkServiceTest {
     }
 
     @Test
-    public void create_引数がblank_3() {
+    public void create_引数がblankの場合はIllegalArgumentException_3() {
         // 準備
         String name = " ";
         String url = "https://example.com/test";
@@ -109,7 +110,7 @@ public class BookmarkServiceTest {
     }
 
     @Test
-    public void create_引数がblank_4() {
+    public void create_引数がblankの場合はIllegalArgumentException_4() {
         // 準備
         String name = "テスト　サイト";
         String url = null;
@@ -128,7 +129,7 @@ public class BookmarkServiceTest {
     }
 
     @Test
-    public void create_引数がblank_5() {
+    public void create_引数がblankの場合はIllegalArgumentException_5() {
         // 準備
         String name = "テスト　サイト";
         String url = "";
@@ -147,7 +148,7 @@ public class BookmarkServiceTest {
     }
 
     @Test
-    public void create_引数がblank_6() {
+    public void create_引数がblankの場合はIllegalArgumentException_6() {
         // 準備
         String name = "テスト　サイト";
         String url = " ";
@@ -166,7 +167,7 @@ public class BookmarkServiceTest {
     }
 
     @Test
-    public void create_URLが重複() {
+    public void create_URLが重複した場合はBookmarkDuplicateException() {
         // 準備
         String name1 = "テスト　サイト1";
         String url1 = "https://example.com/test1";
@@ -237,6 +238,56 @@ public class BookmarkServiceTest {
         assertThat(l.get(2), is(b3));
         assertThat(l.get(3), is(b2));
         assertThat(l.get(4), is(b1));
+    }
+
+    @Test
+    public void findOne_正常() {
+        // 準備
+        this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        Bookmark b3 = this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+
+        // 実行
+        Bookmark result = this.bookmarkService.findOne(b3.getId());
+
+        // 結果確認
+        assertThat(result, is(b3));
+    }
+
+    @Test
+    public void findOne_該当Bookmarkが存在しない場合はnull() {
+        // 準備
+        this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+
+        // 実行
+        Bookmark result = this.bookmarkService.findOne(UUID.randomUUID().toString());
+
+        // 結果確認
+        assertThat(result, is(nullValue()));
+    }
+
+    @Test
+    public void findOne_引数が空の場合は該当Bookmarkが存在しない場合と同じ() {
+        // 準備
+        this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+
+        // 実行
+        Bookmark result1 = this.bookmarkService.findOne(null);
+        Bookmark result2 = this.bookmarkService.findOne("");
+
+        // 結果確認
+        assertThat(result1, is(nullValue()));
+        assertThat(result2, is(nullValue()));
     }
 
 }

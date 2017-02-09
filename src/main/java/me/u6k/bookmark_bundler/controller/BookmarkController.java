@@ -4,12 +4,14 @@ package me.u6k.bookmark_bundler.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import me.u6k.bookmark_bundler.exception.BookmarkNotFoundException;
 import me.u6k.bookmark_bundler.model.Bookmark;
 import me.u6k.bookmark_bundler.service.BookmarkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,6 +54,21 @@ public class BookmarkController {
         List<BookmarkVO> voList = list.stream().map(BookmarkVO::new).collect(Collectors.toList());
 
         return voList;
+    }
+
+    @RequestMapping(value = "/bookmarks/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public BookmarkVO findOne(@PathVariable String id) {
+        L.debug("#findOne: id={}", id);
+
+        Bookmark bookmark = this.service.findOne(id);
+        if (bookmark == null) {
+            throw new BookmarkNotFoundException(id);
+        }
+
+        BookmarkVO bookmarkVO = new BookmarkVO(bookmark);
+
+        return bookmarkVO;
     }
 
 }
