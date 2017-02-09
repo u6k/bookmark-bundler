@@ -161,4 +161,46 @@ public class BookmarkControllerTest {
                         .andExpect(jsonPath("$.message", is("url is blank.")));
     }
 
+    @Test
+    public void create_URLが重複() throws Exception {
+        // 準備1
+        String name1 = "テスト　サイト1";
+        String url1 = "https://example.com/test1";
+
+        String json1 = String.format("{\"name\":\"%s\",\"url\":\"%s\"}", name1, url1);
+        L.debug("request1: json={}", json1);
+
+        // 実行1
+        ResultActions result = this.mvc.perform(post("/bookmarks")
+                        .contentType("application/json")
+                        .content(json1));
+
+        // 結果確認1
+        MockHttpServletResponse response = result.andReturn().getResponse();
+        L.debug("response: status={}, body={}", response.getStatus(), response.getContentAsString());
+
+        result.andExpect(status().isCreated());
+
+        // 準備2
+        String name2 = "テスト　サイト2";
+        String url2 = "https://example.com/test1";
+
+        String json2 = String.format("{\"name\":\"%s\",\"url\":\"%s\"}", name2, url2);
+        L.debug("request2: json={}", json2);
+
+        // 実行2
+        result = this.mvc.perform(post("/bookmarks")
+                        .contentType("application/json")
+                        .content(json2));
+
+        // 結果確認2
+        response = result.andReturn().getResponse();
+        L.debug("response: status={}, body={}", response.getStatus(), response.getContentAsString());
+
+        result.andExpect(status().isBadRequest())
+                        .andExpect(content().contentType("application/json;charset=UTF-8"))
+                        .andExpect(jsonPath("$.exception", is("me.u6k.bookmark_bundler.exception.BookmarkDuplicateException")))
+                        .andExpect(jsonPath("$.message", is("url=https://example.com/test1 is duplicated.")));
+    }
+
 }
