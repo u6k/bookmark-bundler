@@ -1,6 +1,9 @@
 
 package me.u6k.bookmark_bundler.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import me.u6k.bookmark_bundler.model.Bookmark;
 import me.u6k.bookmark_bundler.service.BookmarkService;
 import org.slf4j.Logger;
@@ -37,6 +40,18 @@ public class BookmarkController {
         BookmarkVO newBookmarkVO = new BookmarkVO(newBookmark);
 
         return newBookmarkVO;
+    }
+
+    @RequestMapping(value = "/bookmarks", method = RequestMethod.GET)
+    @ResponseBody
+    public List<BookmarkVO> findAll() {
+        L.debug("#findAll");
+
+        List<Bookmark> list = this.service.findAll();
+
+        List<BookmarkVO> voList = list.stream().map(BookmarkVO::new).collect(Collectors.toList());
+
+        return voList;
     }
 
 }

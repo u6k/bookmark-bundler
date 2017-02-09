@@ -5,7 +5,9 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import me.u6k.bookmark_bundler.model.Bookmark;
 import me.u6k.bookmark_bundler.model.BookmarkRepository;
+import me.u6k.bookmark_bundler.service.BookmarkService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +31,9 @@ public class BookmarkControllerTest {
 
     @Autowired
     private WebApplicationContext context;
+
+    @Autowired
+    private BookmarkService bookmarkService;
 
     @Autowired
     private BookmarkRepository bookmarkRepo;
@@ -201,6 +206,76 @@ public class BookmarkControllerTest {
                         .andExpect(content().contentType("application/json;charset=UTF-8"))
                         .andExpect(jsonPath("$.exception", is("me.u6k.bookmark_bundler.exception.BookmarkDuplicateException")))
                         .andExpect(jsonPath("$.message", is("url=https://example.com/test1 is duplicated.")));
+    }
+
+    @Test
+    public void findAll_正常_0個() throws Exception {
+        // 実行
+        ResultActions result = this.mvc.perform(get("/bookmarks"));
+
+        // 結果確認
+        MockHttpServletResponse response = result.andReturn().getResponse();
+        L.debug("response: status={}, body={}", response.getStatus(), response.getContentAsString());
+
+        result.andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=UTF-8"))
+                        .andExpect(content().string("[]"));
+    }
+
+    @Test
+    public void findAll_正常_1個() throws Exception {
+        // 準備
+        Bookmark b1 = this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+
+        // 実行
+        ResultActions result = this.mvc.perform(get("/bookmarks"));
+
+        // 結果確認
+        MockHttpServletResponse response = result.andReturn().getResponse();
+        L.debug("response: status={}, body={}", response.getStatus(), response.getContentAsString());
+
+        result.andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=UTF-8"))
+                        .andExpect(jsonPath("$[0].id", is(b1.getId())))
+                        .andExpect(jsonPath("$[0].name", is("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル")))
+                        .andExpect(jsonPath("$[0].url", is("http://www.asahi.com/articles/ASK29336BK29UTFK001.html")))
+                        .andExpect(jsonPath("$[1]").doesNotExist());
+    }
+
+    @Test
+    public void findAll_正常_複数個() throws Exception {
+        // 準備
+        Bookmark b1 = this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        Bookmark b2 = this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        Bookmark b3 = this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        Bookmark b4 = this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        Bookmark b5 = this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+
+        // 実行
+        ResultActions result = this.mvc.perform(get("/bookmarks"));
+
+        // 結果確認
+        MockHttpServletResponse response = result.andReturn().getResponse();
+        L.debug("response: status={}, body={}", response.getStatus(), response.getContentAsString());
+
+        result.andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=UTF-8"))
+                        .andExpect(jsonPath("$[0].id", is(b5.getId())))
+                        .andExpect(jsonPath("$[0].name", is("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル")))
+                        .andExpect(jsonPath("$[0].url", is("http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html")))
+                        .andExpect(jsonPath("$[1].id", is(b4.getId())))
+                        .andExpect(jsonPath("$[1].name", is("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル")))
+                        .andExpect(jsonPath("$[1].url", is("http://www.asahi.com/articles/ASK293G2WK29PTIL004.html")))
+                        .andExpect(jsonPath("$[2].id", is(b3.getId())))
+                        .andExpect(jsonPath("$[2].name", is("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル")))
+                        .andExpect(jsonPath("$[2].url", is("http://www.asahi.com/articles/ASK292TYJK29OIPE006.html")))
+                        .andExpect(jsonPath("$[3].id", is(b2.getId())))
+                        .andExpect(jsonPath("$[3].name", is("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル")))
+                        .andExpect(jsonPath("$[3].url", is("http://www.asahi.com/articles/ASK2941FKK29UTIL012.html")))
+                        .andExpect(jsonPath("$[4].id", is(b1.getId())))
+                        .andExpect(jsonPath("$[4].name", is("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル")))
+                        .andExpect(jsonPath("$[4].url", is("http://www.asahi.com/articles/ASK29336BK29UTFK001.html")))
+                        .andExpect(jsonPath("$[5]").doesNotExist());
     }
 
 }
