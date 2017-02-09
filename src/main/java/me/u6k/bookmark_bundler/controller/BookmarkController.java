@@ -6,10 +6,12 @@ import me.u6k.bookmark_bundler.service.BookmarkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,7 +22,9 @@ public class BookmarkController {
     @Autowired
     private BookmarkService service;
 
-    @RequestMapping(value = "/bookmarks", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/bookmarks", method = RequestMethod.POST)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
     public BookmarkVO create(@RequestBody BookmarkVO bookmarkVO) {
         L.debug("#create: bookmarkVO={}", bookmarkVO);
 
