@@ -56,7 +56,6 @@ Bookmarkが0個の場合、空配列`[]`を返します。
             "url":"http://blog.u6k.me/"
         }
 
-
 ## Search Bookmark [/bookmarks?keyword={keyword}]
 
 + Parameters
