@@ -89,6 +89,24 @@ public class BookmarkService {
         return b;
     }
 
+    public void delete(String id) {
+        L.debug("#delete: id={}", id);
+
+        // 入力チェック
+        if (StringUtils.isBlank(id)) {
+            throw new IllegalArgumentException("id is blank.");
+        }
+
+        // 削除対象のBookmarkを取得
+        Bookmark b = this.findOne(id);
+        if (b == null) {
+            throw new BookmarkNotFoundException(id);
+        }
+
+        // 削除
+        this.bookmarkRepo.delete(b);
+    }
+
     public List<Bookmark> findAll() {
         L.debug("#findAll");
 
