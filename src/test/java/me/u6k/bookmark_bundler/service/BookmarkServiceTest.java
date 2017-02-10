@@ -62,7 +62,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_name引数が空の場合はIllegalArgumentException_1() {
+        public void name引数が空の場合はIllegalArgumentException_1() {
             try {
                 // 実行
                 this.bookmarkService.create(null, this.b1.getUrl());
@@ -77,7 +77,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_name引数が空の場合はIllegalArgumentException_2() {
+        public void name引数が空の場合はIllegalArgumentException_2() {
             try {
                 // 実行
                 this.bookmarkService.create("", this.b1.getUrl());
@@ -92,7 +92,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_name引数が空の場合はIllegalArgumentException_3() {
+        public void name引数が空の場合はIllegalArgumentException_3() {
             try {
                 // 実行
                 this.bookmarkService.create(" ", this.b1.getUrl());
@@ -107,7 +107,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_url引数が空の場合はIllegalArgumentException_1() {
+        public void url引数が空の場合はIllegalArgumentException_1() {
             try {
                 // 実行
                 this.bookmarkService.create(this.b1.getName(), null);
@@ -122,7 +122,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_url引数が空の場合はIllegalArgumentException_2() {
+        public void url引数が空の場合はIllegalArgumentException_2() {
             try {
                 // 実行
                 this.bookmarkService.create(this.b1.getName(), "");
@@ -137,7 +137,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_url引数が空の場合はIllegalArgumentException_3() {
+        public void url引数が空の場合はIllegalArgumentException_3() {
             try {
                 // 実行
                 this.bookmarkService.create(this.b1.getName(), " ");
@@ -152,7 +152,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_URLが重複した場合はBookmarkDuplicateException() {
+        public void URLが重複した場合はBookmarkDuplicateException() {
             // 準備
             this.bookmarkService.create(this.b1.getName(), this.b1.getUrl());
 
@@ -291,7 +291,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 正常() {
+        public void 取得できる() {
             // 実行
             Bookmark result3 = this.bookmarkService.findOne(this.b3.getId());
             Bookmark result1 = this.bookmarkService.findOne(this.b1.getId());
@@ -308,7 +308,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_該当Bookmarkが存在しない場合はnull() {
+        public void 該当Bookmarkが存在しない場合はnull() {
             // 実行
             Bookmark result = this.bookmarkService.findOne(UUID.randomUUID().toString());
 
@@ -317,7 +317,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_引数が空の場合は該当Bookmarkが存在しない場合と同じ() {
+        public void id引数が空の場合は該当Bookmarkが存在しない場合と同じ() {
             // 実行
             Bookmark result1 = this.bookmarkService.findOne(null);
             Bookmark result2 = this.bookmarkService.findOne("");
@@ -364,7 +364,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 正常() {
+        public void 更新できる() {
             // 実行
             Bookmark result = this.bookmarkService.update(this.b2.getId(), "Googleが「Android Wear2.0」の提供を開始 大規模な改善 - ライブドアニュース", "http://news.livedoor.com/article/detail/12650086/");
 
@@ -384,7 +384,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_id引数が空の場合はIllegalArgumentException_1() {
+        public void id引数が空の場合はIllegalArgumentException_1() {
             // 準備
             String name = "テスト　サイト";
             String url = "https://example.com/test";
@@ -403,7 +403,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_id引数が空の場合はIllegalArgumentException_2() {
+        public void id引数が空の場合はIllegalArgumentException_2() {
             // 準備
             String name = "テスト　サイト";
             String url = "https://example.com/test";
@@ -422,7 +422,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_name引数が空の場合はIllegalArgumentException_1() {
+        public void name引数が空の場合はIllegalArgumentException_1() {
             // 準備
             String name = null;
             String url = "https://example.com/test";
@@ -441,7 +441,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_name引数が空の場合はIllegalArgumentException_2() {
+        public void name引数が空の場合はIllegalArgumentException_2() {
             // 準備
             String name = "";
             String url = "https://example.com/test";
@@ -460,7 +460,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_url引数が空の場合はIllegalArgumentException_1() {
+        public void url引数が空の場合はIllegalArgumentException_1() {
             // 準備
             String name = "テスト　サイト";
             String url = null;
@@ -479,7 +479,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_url引数が空の場合はIllegalArgumentException_2() {
+        public void url引数が空の場合はIllegalArgumentException_2() {
             // 準備
             String name = "テスト　サイト";
             String url = "";
@@ -498,7 +498,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_該当Bookmarkが存在しない場合はBookmarkNotFoundException() {
+        public void 該当Bookmarkが存在しない場合はBookmarkNotFoundException() {
             // 準備
             String id = UUID.randomUUID().toString();
             String name = "テスト　サイト";
@@ -518,7 +518,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_URLが重複した場合はBookmarkDuplicateException() {
+        public void URLが重複した場合はBookmarkDuplicateException() {
             // 準備
             String name = "テスト　サイト";
 
@@ -572,7 +572,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 正常() throws Exception {
+        public void 削除できる() throws Exception {
             // 実行
             this.bookmarkService.delete(this.b3.getId());
 
@@ -587,7 +587,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_id引数が空の場合はIllegalArgumentException_1() throws Exception {
+        public void id引数が空の場合はIllegalArgumentException_1() throws Exception {
             try {
                 // 実行
                 this.bookmarkService.delete(null);
@@ -609,7 +609,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_id引数が空の場合はIllegalArgumentException_2() throws Exception {
+        public void id引数が空の場合はIllegalArgumentException_2() throws Exception {
             try {
                 // 実行
                 this.bookmarkService.delete("");
@@ -631,7 +631,7 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void 異常_該当Bookmarkが存在しない場合はBookmarkNotFoundException() throws Exception {
+        public void 該当Bookmarkが存在しない場合はBookmarkNotFoundException() throws Exception {
             // 準備
             String id = UUID.randomUUID().toString();
 
