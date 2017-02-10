@@ -706,4 +706,183 @@ public class BookmarkControllerTest {
 
     }
 
+    @RunWith(SpringRunner.class)
+    @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+    @Transactional
+    public static class findByKeyword {
+
+        @Autowired
+        private WebApplicationContext context;
+
+        private MockMvc mvc;
+
+        @Autowired
+        private BookmarkService bookmarkService;
+
+        @Autowired
+        private BookmarkRepository bookmarkRepo;
+
+        private Bookmark asahi1;
+
+        private Bookmark asahi2;
+
+        private Bookmark asahi3;
+
+        private Bookmark asahi4;
+
+        private Bookmark asahi5;
+
+        private Bookmark gigazine1;
+
+        private Bookmark gigazine2;
+
+        private Bookmark gigazine3;
+
+        private Bookmark github1;
+
+        @Before
+        public void setup() {
+            // クリーンアップ
+            this.bookmarkRepo.deleteAllInBatch();
+
+            // テストデータ準備
+            this.asahi1 = this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+            this.asahi2 = this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+            this.asahi3 = this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+            this.gigazine1 = this.bookmarkService.create("あらゆるものが風船のように膨らんでいく謎の現象に巻き込まれたある牧場主のアニメーション「Fat」 - GIGAZINE", "http://gigazine.net/news/20170210-fat/");
+            this.gigazine2 = this.bookmarkService.create("ネス湖のネッシーを四半世紀も探し続けている本物のモンスターハンター - GIGAZINE", "http://gigazine.net/news/20170210-loch-ness-watchman/");
+            this.asahi4 = this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+            this.asahi5 = this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+            this.github1 = this.bookmarkService.create("u6k/bookmark-bundler: ブックマークを束ねる(管理する)サービスを構築します。", "https://github.com/u6k/bookmark-bundler");
+            this.gigazine3 = this.bookmarkService.create("Amazon Dash Buttonのようにポチっとするだけで反トランプな人権団体に寄付できる装置が誕生 - GIGAZINE", "http://gigazine.net/news/20170210-aclu-dash-button/");
+
+            // インスタンス準備
+            this.mvc = MockMvcBuilders.webAppContextSetup(context).build();
+        }
+
+        @Test
+        public void 検索結果が0個() throws Exception {
+            // 実行
+            ResultActions result = perform(this.mvc, get("/bookmarks?keyword=example"));
+
+            // 結果確認
+            result.andExpect(status().isOk())
+                            .andExpect(content().contentType("application/json;charset=UTF-8"))
+                            .andExpect(content().string("[]"));
+        }
+
+        @Test
+        public void 名前で1個ヒット() throws Exception {
+            // 実行
+            ResultActions result = perform(this.mvc, get("/bookmarks?keyword=ネッシー"));
+
+            // 結果確認
+            result.andExpect(status().isOk())
+                            .andExpect(content().contentType("application/json;charset=UTF-8"))
+                            .andExpect(jsonPath("$[0].id", is(this.gigazine2.getId())))
+                            .andExpect(jsonPath("$[0].name", is(this.gigazine2.getName())))
+                            .andExpect(jsonPath("$[0].url", is(this.gigazine2.getUrl())))
+                            .andExpect(jsonPath("$[1]").doesNotExist());
+        }
+
+        @Test
+        public void 名前で複数個ヒット() throws Exception {
+            // 実行
+            ResultActions result = perform(this.mvc, get("/bookmarks?keyword=朝日"));
+
+            // 結果確認
+            result.andExpect(status().isOk())
+                            .andExpect(content().contentType("application/json;charset=UTF-8"))
+                            .andExpect(jsonPath("$[0].id", is(this.asahi5.getId())))
+                            .andExpect(jsonPath("$[0].name", is(this.asahi5.getName())))
+                            .andExpect(jsonPath("$[0].url", is(this.asahi5.getUrl())))
+                            .andExpect(jsonPath("$[1].id", is(this.asahi4.getId())))
+                            .andExpect(jsonPath("$[1].name", is(this.asahi4.getName())))
+                            .andExpect(jsonPath("$[1].url", is(this.asahi4.getUrl())))
+                            .andExpect(jsonPath("$[2].id", is(this.asahi3.getId())))
+                            .andExpect(jsonPath("$[2].name", is(this.asahi3.getName())))
+                            .andExpect(jsonPath("$[2].url", is(this.asahi3.getUrl())))
+                            .andExpect(jsonPath("$[3].id", is(this.asahi2.getId())))
+                            .andExpect(jsonPath("$[3].name", is(this.asahi2.getName())))
+                            .andExpect(jsonPath("$[3].url", is(this.asahi2.getUrl())))
+                            .andExpect(jsonPath("$[4].id", is(this.asahi1.getId())))
+                            .andExpect(jsonPath("$[4].name", is(this.asahi1.getName())))
+                            .andExpect(jsonPath("$[4].url", is(this.asahi1.getUrl())))
+                            .andExpect(jsonPath("$[5]").doesNotExist());
+        }
+
+        @Test
+        public void URLで1個ヒット() throws Exception {
+            // 実行
+            ResultActions result = perform(this.mvc, get("/bookmarks?keyword=ASK2941FKK29UTIL012"));
+
+            // 結果確認
+            result.andExpect(status().isOk())
+                            .andExpect(content().contentType("application/json;charset=UTF-8"))
+                            .andExpect(jsonPath("$[0].id", is(this.asahi2.getId())))
+                            .andExpect(jsonPath("$[0].name", is(this.asahi2.getName())))
+                            .andExpect(jsonPath("$[0].url", is(this.asahi2.getUrl())))
+                            .andExpect(jsonPath("$[1]").doesNotExist());
+        }
+
+        @Test
+        public void URLで複数個ヒット() throws Exception {
+            // 実行
+            ResultActions result = perform(this.mvc, get("/bookmarks?keyword=gigazine"));
+
+            // 結果確認
+            result.andExpect(status().isOk())
+                            .andExpect(content().contentType("application/json;charset=UTF-8"))
+                            .andExpect(jsonPath("$[0].id", is(this.gigazine3.getId())))
+                            .andExpect(jsonPath("$[0].name", is(this.gigazine3.getName())))
+                            .andExpect(jsonPath("$[0].url", is(this.gigazine3.getUrl())))
+                            .andExpect(jsonPath("$[1].id", is(this.gigazine2.getId())))
+                            .andExpect(jsonPath("$[1].name", is(this.gigazine2.getName())))
+                            .andExpect(jsonPath("$[1].url", is(this.gigazine2.getUrl())))
+                            .andExpect(jsonPath("$[2].id", is(this.gigazine1.getId())))
+                            .andExpect(jsonPath("$[2].name", is(this.gigazine1.getName())))
+                            .andExpect(jsonPath("$[2].url", is(this.gigazine1.getUrl())))
+                            .andExpect(jsonPath("$[3]").doesNotExist());
+        }
+
+        @Test
+        public void キーワードが空の場合は全件ヒット() throws Exception {
+            // 実行
+            ResultActions result = perform(this.mvc, get("/bookmarks?keyword="));
+
+            // 結果確認
+            result.andExpect(status().isOk())
+                            .andExpect(content().contentType("application/json;charset=UTF-8"))
+                            .andExpect(jsonPath("$[0].id", is(this.gigazine3.getId())))
+                            .andExpect(jsonPath("$[0].name", is(this.gigazine3.getName())))
+                            .andExpect(jsonPath("$[0].url", is(this.gigazine3.getUrl())))
+                            .andExpect(jsonPath("$[1].id", is(this.github1.getId())))
+                            .andExpect(jsonPath("$[1].name", is(this.github1.getName())))
+                            .andExpect(jsonPath("$[1].url", is(this.github1.getUrl())))
+                            .andExpect(jsonPath("$[2].id", is(this.asahi5.getId())))
+                            .andExpect(jsonPath("$[2].name", is(this.asahi5.getName())))
+                            .andExpect(jsonPath("$[2].url", is(this.asahi5.getUrl())))
+                            .andExpect(jsonPath("$[3].id", is(this.asahi4.getId())))
+                            .andExpect(jsonPath("$[3].name", is(this.asahi4.getName())))
+                            .andExpect(jsonPath("$[3].url", is(this.asahi4.getUrl())))
+                            .andExpect(jsonPath("$[4].id", is(this.gigazine2.getId())))
+                            .andExpect(jsonPath("$[4].name", is(this.gigazine2.getName())))
+                            .andExpect(jsonPath("$[4].url", is(this.gigazine2.getUrl())))
+                            .andExpect(jsonPath("$[5].id", is(this.gigazine1.getId())))
+                            .andExpect(jsonPath("$[5].name", is(this.gigazine1.getName())))
+                            .andExpect(jsonPath("$[5].url", is(this.gigazine1.getUrl())))
+                            .andExpect(jsonPath("$[6].id", is(this.asahi3.getId())))
+                            .andExpect(jsonPath("$[6].name", is(this.asahi3.getName())))
+                            .andExpect(jsonPath("$[6].url", is(this.asahi3.getUrl())))
+                            .andExpect(jsonPath("$[7].id", is(this.asahi2.getId())))
+                            .andExpect(jsonPath("$[7].name", is(this.asahi2.getName())))
+                            .andExpect(jsonPath("$[7].url", is(this.asahi2.getUrl())))
+                            .andExpect(jsonPath("$[8].id", is(this.asahi1.getId())))
+                            .andExpect(jsonPath("$[8].name", is(this.asahi1.getName())))
+                            .andExpect(jsonPath("$[8].url", is(this.asahi1.getUrl())))
+                            .andExpect(jsonPath("$[9]").doesNotExist());
+        }
+
+    }
+
 }
