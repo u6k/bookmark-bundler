@@ -68,13 +68,13 @@ public class BookmarkControllerTest {
         @Autowired
         private WebApplicationContext context;
 
+        private MockMvc mvc;
+
         @Autowired
         private BookmarkService bookmarkService;
 
         @Autowired
         private BookmarkRepository bookmarkRepo;
-
-        private MockMvc mvc;
 
         private Bookmark b1;
 
@@ -224,13 +224,13 @@ public class BookmarkControllerTest {
         @Autowired
         private WebApplicationContext context;
 
+        private MockMvc mvc;
+
         @Autowired
         private BookmarkService bookmarkService;
 
         @Autowired
         private BookmarkRepository bookmarkRepo;
-
-        private MockMvc mvc;
 
         private Bookmark b1;
 
@@ -327,13 +327,13 @@ public class BookmarkControllerTest {
         @Autowired
         private WebApplicationContext context;
 
+        private MockMvc mvc;
+
         @Autowired
         private BookmarkService bookmarkService;
 
         @Autowired
         private BookmarkRepository bookmarkRepo;
-
-        private MockMvc mvc;
 
         private Bookmark b3;
 
@@ -385,13 +385,13 @@ public class BookmarkControllerTest {
         @Autowired
         private WebApplicationContext context;
 
+        private MockMvc mvc;
+
         @Autowired
         private BookmarkService bookmarkService;
 
         @Autowired
         private BookmarkRepository bookmarkRepo;
-
-        private MockMvc mvc;
 
         private Bookmark b1;
 
@@ -625,13 +625,13 @@ public class BookmarkControllerTest {
         @Autowired
         private WebApplicationContext context;
 
+        private MockMvc mvc;
+
         @Autowired
         private BookmarkService bookmarkService;
 
         @Autowired
         private BookmarkRepository bookmarkRepo;
-
-        private MockMvc mvc;
 
         private Bookmark b1;
 
