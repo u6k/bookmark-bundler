@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.u6k.bookmark_bundler.model.Bookmark;
@@ -42,8 +43,9 @@ public class BookmarkControllerTest {
         vo.setName(name);
         vo.setUrl(url);
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(vo);
+        String json = new ObjectMapper()
+                        .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                        .writeValueAsString(vo);
         L.debug("request: json={}", json);
 
         return json;
