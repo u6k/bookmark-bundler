@@ -15,4 +15,7 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, String> {
     @Query("select b from Bookmark b order by b.updated desc")
     List<Bookmark> findAll();
 
+    @Query("select b from Bookmark b where b.name like %:keyword% or b.url like %:keyword% order by b.updated desc")
+    List<Bookmark> findByKeyword(@Param("keyword") String keyword);
+
 }
