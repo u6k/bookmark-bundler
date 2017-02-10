@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import me.u6k.bookmark_bundler.exception.BookmarkNotFoundException;
 import me.u6k.bookmark_bundler.model.Bookmark;
 import me.u6k.bookmark_bundler.service.BookmarkService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,10 +72,15 @@ public class BookmarkController {
 
     @RequestMapping(value = "/bookmarks", method = RequestMethod.GET)
     @ResponseBody
-    public List<BookmarkVO> findAll() {
-        L.debug("#findAll");
+    public List<BookmarkVO> findByKeyword(@RequestParam(value = "keyword", required = false) String keyword) {
+        L.debug("#findByKeyword: keyword={}", keyword);
 
-        List<Bookmark> list = this.service.findAll();
+        List<Bookmark> list;
+        if (!StringUtils.isBlank(keyword)) {
+            list = this.service.findByKeyword(keyword);
+        } else {
+            list = this.service.findAll();
+        }
 
         List<BookmarkVO> voList = list.stream().map(BookmarkVO::new).collect(Collectors.toList());
 
