@@ -759,25 +759,16 @@ public class BookmarkServiceTest {
         }
 
         @Test
-        public void キーワードが空の場合は全件ヒット_1() {
+        public void キーワードがnullの場合は0個_1() {
             // 実行
             List<Bookmark> l = this.bookmarkService.findByKeyword(null);
 
             // 結果確認
-            assertThat(l.size(), is(9));
-            assertThat(l.get(0), is(this.gigazine3));
-            assertThat(l.get(1), is(this.github1));
-            assertThat(l.get(2), is(this.asahi5));
-            assertThat(l.get(3), is(this.asahi4));
-            assertThat(l.get(4), is(this.gigazine2));
-            assertThat(l.get(5), is(this.gigazine1));
-            assertThat(l.get(6), is(this.asahi3));
-            assertThat(l.get(7), is(this.asahi2));
-            assertThat(l.get(8), is(this.asahi1));
+            assertThat(l.size(), is(0));
         }
 
         @Test
-        public void キーワードが空の場合は全件ヒット_2() {
+        public void キーワードが空文字列の場合は全件ヒット_2() {
             // 実行
             List<Bookmark> l = this.bookmarkService.findByKeyword("");
 
