@@ -23,7 +23,10 @@
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>      @Query(<span class="jxr_string">"select b from Bookmark b order by b.updated desc"</span>)
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>      List&lt;Bookmark&gt; findAll();
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  }
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>      @Query(<span class="jxr_string">"select b from Bookmark b where b.name like %:keyword% or b.url like %:keyword% order by b.updated desc"</span>)
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>      List&lt;Bookmark&gt; findByKeyword(@Param(<span class="jxr_string">"keyword"</span>) String keyword);
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2017 <a href="http://www.spring.io">Pivotal Software, Inc.</a>. All rights reserved.</div>
