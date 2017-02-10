@@ -127,4 +127,16 @@ public class BookmarkService {
         return b;
     }
 
+    public List<Bookmark> findByKeyword(String keyword) {
+        L.debug("#findByKeyword: string={}", keyword);
+
+        if (StringUtils.isBlank(keyword)) {
+            return this.findAll();
+        }
+
+        List<Bookmark> l = this.bookmarkRepo.findByKeyword(keyword);
+
+        return l;
+    }
+
 }

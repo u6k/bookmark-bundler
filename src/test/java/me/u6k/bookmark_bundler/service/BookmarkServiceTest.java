@@ -586,6 +586,7 @@ public class BookmarkServiceTest {
 
             fail();
         } catch (IllegalArgumentException e) {
+            // 結果確認
             assertThat(e.getMessage(), is("id is blank."));
         }
 
@@ -614,6 +615,7 @@ public class BookmarkServiceTest {
 
             fail();
         } catch (IllegalArgumentException e) {
+            // 結果確認
             assertThat(e.getMessage(), is("id is blank."));
         }
 
@@ -644,6 +646,7 @@ public class BookmarkServiceTest {
 
             fail();
         } catch (BookmarkNotFoundException e) {
+            // 結果確認
             assertThat(e.getMessage(), is("bookmark.id=" + ngId + " not found."));
         }
 
@@ -655,6 +658,174 @@ public class BookmarkServiceTest {
         assertThat(l.get(2), is(b3));
         assertThat(l.get(3), is(b2));
         assertThat(l.get(4), is(b1));
+    }
+
+    @Test
+    public void findByKeyword_正常_0個() {
+        // 準備
+        this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        this.bookmarkService.create("あらゆるものが風船のように膨らんでいく謎の現象に巻き込まれたある牧場主のアニメーション「Fat」 - GIGAZINE", "http://gigazine.net/news/20170210-fat/");
+        this.bookmarkService.create("ネス湖のネッシーを四半世紀も探し続けている本物のモンスターハンター - GIGAZINE", "http://gigazine.net/news/20170210-loch-ness-watchman/");
+        this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+        this.bookmarkService.create("u6k/bookmark-bundler: ブックマークを束ねる(管理する)サービスを構築します。", "https://github.com/u6k/bookmark-bundler");
+        this.bookmarkService.create("Amazon Dash Buttonのようにポチっとするだけで反トランプな人権団体に寄付できる装置が誕生 - GIGAZINE", "http://gigazine.net/news/20170210-aclu-dash-button/");
+
+        // 実行
+        List<Bookmark> l = this.bookmarkService.findByKeyword("example");
+
+        // 結果確認
+        assertThat(l.size(), is(0));
+    }
+
+    @Test
+    public void findByKeyword_正常_名前で1個ヒット() {
+        // 準備
+        this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        this.bookmarkService.create("あらゆるものが風船のように膨らんでいく謎の現象に巻き込まれたある牧場主のアニメーション「Fat」 - GIGAZINE", "http://gigazine.net/news/20170210-fat/");
+        Bookmark gigazine2 = this.bookmarkService.create("ネス湖のネッシーを四半世紀も探し続けている本物のモンスターハンター - GIGAZINE", "http://gigazine.net/news/20170210-loch-ness-watchman/");
+        this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+        this.bookmarkService.create("u6k/bookmark-bundler: ブックマークを束ねる(管理する)サービスを構築します。", "https://github.com/u6k/bookmark-bundler");
+        this.bookmarkService.create("Amazon Dash Buttonのようにポチっとするだけで反トランプな人権団体に寄付できる装置が誕生 - GIGAZINE", "http://gigazine.net/news/20170210-aclu-dash-button/");
+
+        // 実行
+        List<Bookmark> l = this.bookmarkService.findByKeyword("ネッシー");
+
+        // 結果確認
+        assertThat(l.size(), is(1));
+        assertThat(l.get(0), is(gigazine2));
+    }
+
+    @Test
+    public void findByKeyword_正常_名前で複数個ヒット() {
+        // 準備
+        Bookmark asahi1 = this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        Bookmark asahi2 = this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        Bookmark asahi3 = this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        this.bookmarkService.create("あらゆるものが風船のように膨らんでいく謎の現象に巻き込まれたある牧場主のアニメーション「Fat」 - GIGAZINE", "http://gigazine.net/news/20170210-fat/");
+        this.bookmarkService.create("ネス湖のネッシーを四半世紀も探し続けている本物のモンスターハンター - GIGAZINE", "http://gigazine.net/news/20170210-loch-ness-watchman/");
+        Bookmark asahi4 = this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        Bookmark asahi5 = this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+        this.bookmarkService.create("u6k/bookmark-bundler: ブックマークを束ねる(管理する)サービスを構築します。", "https://github.com/u6k/bookmark-bundler");
+        this.bookmarkService.create("Amazon Dash Buttonのようにポチっとするだけで反トランプな人権団体に寄付できる装置が誕生 - GIGAZINE", "http://gigazine.net/news/20170210-aclu-dash-button/");
+
+        // 実行
+        List<Bookmark> l = this.bookmarkService.findByKeyword("朝日");
+
+        // 結果確認
+        assertThat(l.size(), is(5));
+        assertThat(l.get(0), is(asahi5));
+        assertThat(l.get(1), is(asahi4));
+        assertThat(l.get(2), is(asahi3));
+        assertThat(l.get(3), is(asahi2));
+        assertThat(l.get(4), is(asahi1));
+    }
+
+    @Test
+    public void findByKeyword_正常_URLで1個ヒット() {
+        // 準備
+        this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        Bookmark asahi2 = this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        this.bookmarkService.create("あらゆるものが風船のように膨らんでいく謎の現象に巻き込まれたある牧場主のアニメーション「Fat」 - GIGAZINE", "http://gigazine.net/news/20170210-fat/");
+        this.bookmarkService.create("ネス湖のネッシーを四半世紀も探し続けている本物のモンスターハンター - GIGAZINE", "http://gigazine.net/news/20170210-loch-ness-watchman/");
+        this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+        this.bookmarkService.create("u6k/bookmark-bundler: ブックマークを束ねる(管理する)サービスを構築します。", "https://github.com/u6k/bookmark-bundler");
+        this.bookmarkService.create("Amazon Dash Buttonのようにポチっとするだけで反トランプな人権団体に寄付できる装置が誕生 - GIGAZINE", "http://gigazine.net/news/20170210-aclu-dash-button/");
+
+        // 実行
+        List<Bookmark> l = this.bookmarkService.findByKeyword("ASK2941FKK29UTIL012");
+
+        // 結果確認
+        assertThat(l.size(), is(1));
+        assertThat(l.get(0), is(asahi2));
+    }
+
+    @Test
+    public void findByKeyword_正常_URLで複数個ヒット() {
+        // 準備
+        this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        Bookmark gigazine1 = this.bookmarkService.create("あらゆるものが風船のように膨らんでいく謎の現象に巻き込まれたある牧場主のアニメーション「Fat」 - GIGAZINE", "http://gigazine.net/news/20170210-fat/");
+        Bookmark gigazine2 = this.bookmarkService.create("ネス湖のネッシーを四半世紀も探し続けている本物のモンスターハンター - GIGAZINE", "http://gigazine.net/news/20170210-loch-ness-watchman/");
+        this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+        this.bookmarkService.create("u6k/bookmark-bundler: ブックマークを束ねる(管理する)サービスを構築します。", "https://github.com/u6k/bookmark-bundler");
+        Bookmark gigazine3 = this.bookmarkService.create("Amazon Dash Buttonのようにポチっとするだけで反トランプな人権団体に寄付できる装置が誕生 - GIGAZINE", "http://gigazine.net/news/20170210-aclu-dash-button/");
+
+        // 実行
+        List<Bookmark> l = this.bookmarkService.findByKeyword("gigazine");
+
+        // 結果確認
+        assertThat(l.size(), is(3));
+        assertThat(l.get(0), is(gigazine3));
+        assertThat(l.get(1), is(gigazine2));
+        assertThat(l.get(2), is(gigazine1));
+    }
+
+    @Test
+    public void findByKeyword_キーワードが空の場合は全件ヒット_1() {
+        // 準備
+        Bookmark asahi1 = this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        Bookmark asahi2 = this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        Bookmark asahi3 = this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        Bookmark gigazine1 = this.bookmarkService.create("あらゆるものが風船のように膨らんでいく謎の現象に巻き込まれたある牧場主のアニメーション「Fat」 - GIGAZINE", "http://gigazine.net/news/20170210-fat/");
+        Bookmark gigazine2 = this.bookmarkService.create("ネス湖のネッシーを四半世紀も探し続けている本物のモンスターハンター - GIGAZINE", "http://gigazine.net/news/20170210-loch-ness-watchman/");
+        Bookmark asahi4 = this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        Bookmark asahi5 = this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+        Bookmark github1 = this.bookmarkService.create("u6k/bookmark-bundler: ブックマークを束ねる(管理する)サービスを構築します。", "https://github.com/u6k/bookmark-bundler");
+        Bookmark gigazine3 = this.bookmarkService.create("Amazon Dash Buttonのようにポチっとするだけで反トランプな人権団体に寄付できる装置が誕生 - GIGAZINE", "http://gigazine.net/news/20170210-aclu-dash-button/");
+
+        // 実行
+        List<Bookmark> l = this.bookmarkService.findByKeyword(null);
+
+        // 結果確認
+        assertThat(l.size(), is(9));
+        assertThat(l.get(0), is(gigazine3));
+        assertThat(l.get(1), is(github1));
+        assertThat(l.get(2), is(asahi5));
+        assertThat(l.get(3), is(asahi4));
+        assertThat(l.get(4), is(gigazine2));
+        assertThat(l.get(5), is(gigazine1));
+        assertThat(l.get(6), is(asahi3));
+        assertThat(l.get(7), is(asahi2));
+        assertThat(l.get(8), is(asahi1));
+    }
+
+    @Test
+    public void findByKeyword_キーワードが空の場合は全件ヒット_2() {
+        // 準備
+        Bookmark asahi1 = this.bookmarkService.create("「廃棄」日報、発見報告まで１カ月　稲田氏、隠蔽を否定：朝日新聞デジタル", "http://www.asahi.com/articles/ASK29336BK29UTFK001.html");
+        Bookmark asahi2 = this.bookmarkService.create("Ｃ・Ｗ・ニコルさんの長女を逮捕　覚醒剤使用の疑い：朝日新聞デジタル", "http://www.asahi.com/articles/ASK2941FKK29UTIL012.html");
+        Bookmark asahi3 = this.bookmarkService.create("タリウム被害の男性が証言 「枕にびっしりと髪の毛が」：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292TYJK29OIPE006.html");
+        Bookmark gigazine1 = this.bookmarkService.create("あらゆるものが風船のように膨らんでいく謎の現象に巻き込まれたある牧場主のアニメーション「Fat」 - GIGAZINE", "http://gigazine.net/news/20170210-fat/");
+        Bookmark gigazine2 = this.bookmarkService.create("ネス湖のネッシーを四半世紀も探し続けている本物のモンスターハンター - GIGAZINE", "http://gigazine.net/news/20170210-loch-ness-watchman/");
+        Bookmark asahi4 = this.bookmarkService.create("日本海側、大雪のおそれ 中国地方で８０センチ予想：朝日新聞デジタル", "http://www.asahi.com/articles/ASK293G2WK29PTIL004.html");
+        Bookmark asahi5 = this.bookmarkService.create("トランプ氏「娘が不当に扱われた」 販売中止の店を批判：朝日新聞デジタル", "http://www.asahi.com/articles/ASK292PWFK29UHBI00D.html");
+        Bookmark github1 = this.bookmarkService.create("u6k/bookmark-bundler: ブックマークを束ねる(管理する)サービスを構築します。", "https://github.com/u6k/bookmark-bundler");
+        Bookmark gigazine3 = this.bookmarkService.create("Amazon Dash Buttonのようにポチっとするだけで反トランプな人権団体に寄付できる装置が誕生 - GIGAZINE", "http://gigazine.net/news/20170210-aclu-dash-button/");
+
+        // 実行
+        List<Bookmark> l = this.bookmarkService.findByKeyword("");
+
+        // 結果確認
+        assertThat(l.size(), is(9));
+        assertThat(l.get(0), is(gigazine3));
+        assertThat(l.get(1), is(github1));
+        assertThat(l.get(2), is(asahi5));
+        assertThat(l.get(3), is(asahi4));
+        assertThat(l.get(4), is(gigazine2));
+        assertThat(l.get(5), is(gigazine1));
+        assertThat(l.get(6), is(asahi3));
+        assertThat(l.get(7), is(asahi2));
+        assertThat(l.get(8), is(asahi1));
     }
 
 }
