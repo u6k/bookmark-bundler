@@ -10,7 +10,7 @@ Bookmarkは、そのままブックマークです。
 
 BookmarkはUUIDを識別子とします。同一URLのBookmarkは許容しません。
 
-## Bookmark Collection [/bookmarks]
+## Bookmark Collection [/api/bookmarks]
 
 ### 全てのBookmarkを取得 [GET]
 
@@ -56,7 +56,7 @@ Bookmarkが0個の場合、空配列`[]`を返します。
             "url":"http://blog.u6k.me/"
         }
 
-## Search Bookmark [/bookmarks?keyword={keyword}]
+## Search Bookmark [/api/bookmarks?keyword={keyword}]
 
 + Parameters
     + keyword: github (string, optional) - キーワード
@@ -79,7 +79,7 @@ Bookmarkが0個の場合、空配列`[]`を返します。
             }
         ]
 
-## Bookmark [/bookmarks/{bookmark_id}]
+## Bookmark [/api/bookmarks/{bookmark_id}]
 
 + Parameters
     + bookmark_id: `acf1c578-c562-42ca-a2a2-d9da6ac19d0a` (uuid) - Bookmarkの識別子。指定したidのBookmarkが存在しない場合、`404 Not Found`を返します。
