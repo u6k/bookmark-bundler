@@ -37,7 +37,7 @@
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>      @Autowired
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../me/u6k/bookmark_bundler/service/BookmarkService.html">BookmarkService</a> service;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>      @RequestMapping(value = <span class="jxr_string">"/bookmarks"</span>, method = RequestMethod.POST)
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>      @RequestMapping(value = <span class="jxr_string">"/api/bookmarks"</span>, method = RequestMethod.POST)
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>      @ResponseBody
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>      @ResponseStatus(HttpStatus.CREATED)
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../me/u6k/bookmark_bundler/controller/BookmarkVO.html">BookmarkVO</a> create(@RequestBody <a href="../../../../me/u6k/bookmark_bundler/controller/BookmarkVO.html">BookmarkVO</a> bookmarkVO) {
@@ -54,7 +54,7 @@
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>          <strong class="jxr_keyword">return</strong> newBookmarkVO;
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      }
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>      @RequestMapping(value = <span class="jxr_string">"/bookmarks/{id}"</span>, method = RequestMethod.PUT)
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>      @RequestMapping(value = <span class="jxr_string">"/api/bookmarks/{id}"</span>, method = RequestMethod.PUT)
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      @ResponseBody
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../me/u6k/bookmark_bundler/controller/BookmarkVO.html">BookmarkVO</a> update(@PathVariable String id, @RequestBody <a href="../../../../me/u6k/bookmark_bundler/controller/BookmarkVO.html">BookmarkVO</a> bookmarkVO) {
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>          L.debug(<span class="jxr_string">"#update: bookmarkVO={}"</span>, bookmarkVO);
@@ -70,7 +70,7 @@
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          <strong class="jxr_keyword">return</strong> updatedBookmarkVO;
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>      }
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>      @RequestMapping(value = <span class="jxr_string">"/bookmarks/{id}"</span>, method = RequestMethod.DELETE)
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      @RequestMapping(value = <span class="jxr_string">"/api/bookmarks/{id}"</span>, method = RequestMethod.DELETE)
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      @ResponseStatus(HttpStatus.NO_CONTENT)
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> delete(@PathVariable String id) {
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>          L.debug(<span class="jxr_string">"#delete: id={}"</span>, id);
@@ -78,7 +78,7 @@
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          <strong class="jxr_keyword">this</strong>.service.delete(id);
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      }
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      @RequestMapping(value = <span class="jxr_string">"/bookmarks"</span>, method = RequestMethod.GET)
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>      @RequestMapping(value = <span class="jxr_string">"/api/bookmarks"</span>, method = RequestMethod.GET)
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>      @ResponseBody
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">public</strong> List&lt;BookmarkVO&gt; findByKeyword(@RequestParam(value = <span class="jxr_string">"keyword"</span>, required = false) String keyword) {
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          L.debug(<span class="jxr_string">"#findByKeyword: keyword={}"</span>, keyword);
@@ -95,7 +95,7 @@
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>          <strong class="jxr_keyword">return</strong> voList;
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>      }
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>  
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>      @RequestMapping(value = <span class="jxr_string">"/bookmarks/{id}"</span>, method = RequestMethod.GET)
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>      @RequestMapping(value = <span class="jxr_string">"/api/bookmarks/{id}"</span>, method = RequestMethod.GET)
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>      @ResponseBody
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../me/u6k/bookmark_bundler/controller/BookmarkVO.html">BookmarkVO</a> findOne(@PathVariable String id) {
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>          L.debug(<span class="jxr_string">"#findOne: id={}"</span>, id);
