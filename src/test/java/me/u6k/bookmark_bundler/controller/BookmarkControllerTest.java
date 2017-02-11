@@ -98,7 +98,7 @@ public class BookmarkControllerTest {
             String json = buildJson(this.b1.getName(), this.b1.getUrl());
 
             // 実行
-            ResultActions result = perform(mvc, post("/bookmarks")
+            ResultActions result = perform(mvc, post("/api/bookmarks")
                             .contentType("application/json")
                             .content(json));
 
@@ -120,7 +120,7 @@ public class BookmarkControllerTest {
             String json = buildJson(null, this.b1.getUrl());
 
             // 実行
-            ResultActions result = perform(mvc, post("/bookmarks")
+            ResultActions result = perform(mvc, post("/api/bookmarks")
                             .contentType("application/json")
                             .content(json));
 
@@ -139,7 +139,7 @@ public class BookmarkControllerTest {
             String json = buildJson("", this.b1.getUrl());
 
             // 実行
-            ResultActions result = perform(mvc, post("/bookmarks")
+            ResultActions result = perform(mvc, post("/api/bookmarks")
                             .contentType("application/json")
                             .content(json));
 
@@ -158,7 +158,7 @@ public class BookmarkControllerTest {
             String json = buildJson(this.b1.getName(), null);
 
             // 実行
-            ResultActions result = perform(mvc, post("/bookmarks")
+            ResultActions result = perform(mvc, post("/api/bookmarks")
                             .contentType("application/json")
                             .content(json));
 
@@ -177,7 +177,7 @@ public class BookmarkControllerTest {
             String json = buildJson(this.b1.getName(), "");
 
             // 実行
-            ResultActions result = perform(mvc, post("/bookmarks")
+            ResultActions result = perform(mvc, post("/api/bookmarks")
                             .contentType("application/json")
                             .content(json));
 
@@ -198,7 +198,7 @@ public class BookmarkControllerTest {
             String json = buildJson("u6k.Redmine", this.b1.getUrl());
 
             // 実行
-            ResultActions result = perform(mvc, post("/bookmarks")
+            ResultActions result = perform(mvc, post("/api/bookmarks")
                             .contentType("application/json")
                             .content(json));
 
@@ -263,7 +263,7 @@ public class BookmarkControllerTest {
             // 実行
             this.bookmarkRepo.deleteAllInBatch();
 
-            ResultActions result = perform(mvc, get("/bookmarks"));
+            ResultActions result = perform(mvc, get("/api/bookmarks"));
 
             // 結果確認
             result.andExpect(status().isOk())
@@ -280,7 +280,7 @@ public class BookmarkControllerTest {
             this.bookmarkRepo.delete(this.b5.getId());
 
             // 実行
-            ResultActions result = perform(mvc, get("/bookmarks"));
+            ResultActions result = perform(mvc, get("/api/bookmarks"));
 
             // 結果確認
             result.andExpect(status().isOk())
@@ -294,7 +294,7 @@ public class BookmarkControllerTest {
         @Test
         public void 検索結果が複数個() throws Exception {
             // 実行
-            ResultActions result = this.mvc.perform(get("/bookmarks"));
+            ResultActions result = this.mvc.perform(get("/api/bookmarks"));
 
             // 結果確認
             result.andExpect(status().isOk())
@@ -356,7 +356,7 @@ public class BookmarkControllerTest {
         @Test
         public void 取得できる() throws Exception {
             // 実行
-            ResultActions result = perform(this.mvc, get("/bookmarks/" + this.b3.getId()));
+            ResultActions result = perform(this.mvc, get("/api/bookmarks/" + this.b3.getId()));
 
             // 結果確認
             result.andExpect(status().isOk())
@@ -369,7 +369,7 @@ public class BookmarkControllerTest {
         @Test
         public void 該当Bookmarkが存在しない場合は404() throws Exception {
             // 実行
-            ResultActions result = perform(this.mvc, get("/bookmarks/" + UUID.randomUUID().toString()));
+            ResultActions result = perform(this.mvc, get("/api/bookmarks/" + UUID.randomUUID().toString()));
 
             // 結果確認
             result.andExpect(status().isNotFound());
@@ -425,7 +425,7 @@ public class BookmarkControllerTest {
             String json = buildJson("Googleが「Android Wear2.0」の提供を開始 大規模な改善 - ライブドアニュース", "http://news.livedoor.com/article/detail/12650086/");
 
             // 実行
-            ResultActions result = perform(this.mvc, put("/bookmarks/" + this.b4.getId())
+            ResultActions result = perform(this.mvc, put("/api/bookmarks/" + this.b4.getId())
                             .contentType("application/json")
                             .content(json));
 
@@ -436,7 +436,7 @@ public class BookmarkControllerTest {
                             .andExpect(jsonPath("$.name", is("Googleが「Android Wear2.0」の提供を開始 大規模な改善 - ライブドアニュース")))
                             .andExpect(jsonPath("$.url", is("http://news.livedoor.com/article/detail/12650086/")));
 
-            result = perform(this.mvc, get("/bookmarks/"));
+            result = perform(this.mvc, get("/api/bookmarks/"));
 
             result.andExpect(status().isOk())
                             .andExpect(content().contentType("application/json;charset=UTF-8"))
@@ -464,7 +464,7 @@ public class BookmarkControllerTest {
             String json = buildJson(null, "http://news.livedoor.com/article/detail/12650086/");
 
             // 実行
-            ResultActions result = perform(this.mvc, put("/bookmarks/" + this.b4.getId())
+            ResultActions result = perform(this.mvc, put("/api/bookmarks/" + this.b4.getId())
                             .contentType("application/json")
                             .content(json));
 
@@ -490,7 +490,7 @@ public class BookmarkControllerTest {
             String json = buildJson("", "http://news.livedoor.com/article/detail/12650086/");
 
             // 実行
-            ResultActions result = perform(this.mvc, put("/bookmarks/" + this.b4.getId())
+            ResultActions result = perform(this.mvc, put("/api/bookmarks/" + this.b4.getId())
                             .contentType("application/json")
                             .content(json));
 
@@ -516,7 +516,7 @@ public class BookmarkControllerTest {
             String json = buildJson("Googleが「Android Wear2.0」の提供を開始 大規模な改善 - ライブドアニュース", null);
 
             // 実行
-            ResultActions result = perform(this.mvc, put("/bookmarks/" + this.b2.getId())
+            ResultActions result = perform(this.mvc, put("/api/bookmarks/" + this.b2.getId())
                             .contentType("application/json")
                             .content(json));
 
@@ -542,7 +542,7 @@ public class BookmarkControllerTest {
             String json = buildJson("Googleが「Android Wear2.0」の提供を開始 大規模な改善 - ライブドアニュース", null);
 
             // 実行
-            ResultActions result = perform(this.mvc, put("/bookmarks/" + this.b2.getId())
+            ResultActions result = perform(this.mvc, put("/api/bookmarks/" + this.b2.getId())
                             .contentType("application/json")
                             .content(json));
 
@@ -569,7 +569,7 @@ public class BookmarkControllerTest {
             String json = buildJson("Googleが「Android Wear2.0」の提供を開始 大規模な改善 - ライブドアニュース", "http://news.livedoor.com/article/detail/12650086/");
 
             // 実行
-            ResultActions result = perform(this.mvc, put("/bookmarks/" + id)
+            ResultActions result = perform(this.mvc, put("/api/bookmarks/" + id)
                             .contentType("application/json")
                             .content(json));
 
@@ -595,7 +595,7 @@ public class BookmarkControllerTest {
             String json = buildJson("Googleが「Android Wear2.0」の提供を開始 大規模な改善 - ライブドアニュース", this.b3.getUrl());
 
             // 実行
-            ResultActions result = perform(this.mvc, put("/bookmarks/" + this.b3.getId())
+            ResultActions result = perform(this.mvc, put("/api/bookmarks/" + this.b3.getId())
                             .contentType("application/json")
                             .content(json));
 
@@ -662,7 +662,7 @@ public class BookmarkControllerTest {
         @Test
         public void delete_正常() throws Exception {
             // 実行
-            ResultActions result = perform(this.mvc, delete("/bookmarks/" + b3.getId()));
+            ResultActions result = perform(this.mvc, delete("/api/bookmarks/" + b3.getId()));
 
             // 結果確認
             result.andExpect(status().isNoContent())
@@ -683,7 +683,7 @@ public class BookmarkControllerTest {
             String id = UUID.randomUUID().toString();
 
             // 実行
-            ResultActions result = perform(this.mvc, delete("/bookmarks/" + id));
+            ResultActions result = perform(this.mvc, delete("/api/bookmarks/" + id));
 
             // 結果確認
             MockHttpServletResponse response = result.andReturn().getResponse();
@@ -763,7 +763,7 @@ public class BookmarkControllerTest {
         @Test
         public void 検索結果が0個() throws Exception {
             // 実行
-            ResultActions result = perform(this.mvc, get("/bookmarks?keyword=example"));
+            ResultActions result = perform(this.mvc, get("/api/bookmarks?keyword=example"));
 
             // 結果確認
             result.andExpect(status().isOk())
@@ -774,7 +774,7 @@ public class BookmarkControllerTest {
         @Test
         public void 名前で1個ヒット() throws Exception {
             // 実行
-            ResultActions result = perform(this.mvc, get("/bookmarks?keyword=ネッシー"));
+            ResultActions result = perform(this.mvc, get("/api/bookmarks?keyword=ネッシー"));
 
             // 結果確認
             result.andExpect(status().isOk())
@@ -788,7 +788,7 @@ public class BookmarkControllerTest {
         @Test
         public void 名前で複数個ヒット() throws Exception {
             // 実行
-            ResultActions result = perform(this.mvc, get("/bookmarks?keyword=朝日"));
+            ResultActions result = perform(this.mvc, get("/api/bookmarks?keyword=朝日"));
 
             // 結果確認
             result.andExpect(status().isOk())
@@ -814,7 +814,7 @@ public class BookmarkControllerTest {
         @Test
         public void URLで1個ヒット() throws Exception {
             // 実行
-            ResultActions result = perform(this.mvc, get("/bookmarks?keyword=ASK2941FKK29UTIL012"));
+            ResultActions result = perform(this.mvc, get("/api/bookmarks?keyword=ASK2941FKK29UTIL012"));
 
             // 結果確認
             result.andExpect(status().isOk())
@@ -828,7 +828,7 @@ public class BookmarkControllerTest {
         @Test
         public void URLで複数個ヒット() throws Exception {
             // 実行
-            ResultActions result = perform(this.mvc, get("/bookmarks?keyword=gigazine"));
+            ResultActions result = perform(this.mvc, get("/api/bookmarks?keyword=gigazine"));
 
             // 結果確認
             result.andExpect(status().isOk())
@@ -848,7 +848,7 @@ public class BookmarkControllerTest {
         @Test
         public void キーワードが空の場合は全件ヒット() throws Exception {
             // 実行
-            ResultActions result = perform(this.mvc, get("/bookmarks?keyword="));
+            ResultActions result = perform(this.mvc, get("/api/bookmarks?keyword="));
 
             // 結果確認
             result.andExpect(status().isOk())
