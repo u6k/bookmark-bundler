@@ -29,7 +29,7 @@ public class BookmarkController {
     @Autowired
     private BookmarkService service;
 
-    @RequestMapping(value = "/bookmarks", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/bookmarks", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public BookmarkVO create(@RequestBody BookmarkVO bookmarkVO) {
@@ -46,7 +46,7 @@ public class BookmarkController {
         return newBookmarkVO;
     }
 
-    @RequestMapping(value = "/bookmarks/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/bookmarks/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public BookmarkVO update(@PathVariable String id, @RequestBody BookmarkVO bookmarkVO) {
         L.debug("#update: bookmarkVO={}", bookmarkVO);
@@ -62,7 +62,7 @@ public class BookmarkController {
         return updatedBookmarkVO;
     }
 
-    @RequestMapping(value = "/bookmarks/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/bookmarks/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String id) {
         L.debug("#delete: id={}", id);
@@ -70,7 +70,7 @@ public class BookmarkController {
         this.service.delete(id);
     }
 
-    @RequestMapping(value = "/bookmarks", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/bookmarks", method = RequestMethod.GET)
     @ResponseBody
     public List<BookmarkVO> findByKeyword(@RequestParam(value = "keyword", required = false) String keyword) {
         L.debug("#findByKeyword: keyword={}", keyword);
@@ -87,7 +87,7 @@ public class BookmarkController {
         return voList;
     }
 
-    @RequestMapping(value = "/bookmarks/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/bookmarks/{id}", method = RequestMethod.GET)
     @ResponseBody
     public BookmarkVO findOne(@PathVariable String id) {
         L.debug("#findOne: id={}", id);
