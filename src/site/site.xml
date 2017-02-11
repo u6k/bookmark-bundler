@@ -5,7 +5,8 @@
             <item name="${project.name}" href="${project.url}" />
         </links>
         <menu name="Menu">
-            <item name="REST API" href="api-reference.html" />
+            <item name="REST API仕様" href="api-reference.html" />
+            <item name="サイトマップ" href="images/sitemap.svg" />
         </menu>
         <menu ref="parent" />
         <menu ref="modules" />
