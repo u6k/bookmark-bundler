@@ -6,7 +6,7 @@
         </links>
         <menu name="Menu">
             <item name="REST API仕様" href="api-reference.html" />
-            <item name="サイトマップ" href="images/sitemap.svg" />
+            <item name="サイトマップ" href="sitemap.html" />
         </menu>
         <menu ref="parent" />
         <menu ref="modules" />
