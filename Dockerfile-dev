@@ -1,16 +1,23 @@
 FROM java:8
 MAINTAINER u6k.apps@gmail.com
 
+# Setup Apache Maven, Graphviz, aglio
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
     apt-get update && \
-    apt-get install -y maven build-essential nodejs && \
-    apt-get clean && \
-    npm install -g aglio api-mock && \
-    mkdir -p /var/my-app
+    apt-get install -y maven build-essential nodejs graphviz && \
+    apt-get clean
 
+RUN npm install -g aglio
+
+# Setup PlantUML
+WORKDIR /opt/bin
+RUN curl -L -o plantuml.jar http://sourceforge.net/projects/plantuml/files/plantuml.jar/download
+
+# Setup work directory
+RUN mkdir -p /var/my-app
 WORKDIR /var/my-app
 
-EXPOSE 3000
+# Setup docker run setting
 EXPOSE 8080
 
 CMD ["bash"]

@@ -1,0 +1,19 @@
+@startuml
+
+[*] --> bookmarks : GET
+bookmarks --> bookmarks_create : GET メニュー
+bookmarks --> external_site : window.open()
+bookmarks_create --> bookmarks_create : POST 新規登録ボタン
+bookmarks_create --> bookmarks : リダイレクト
+
+state "/bookmarks" as bookmarks
+bookmarks: ブックマークをリスト表示 (GET)
+bookmarks: ブックマークのWebサイトを別ウィンドウで表示 (JavaScript)
+
+state "/bookmarks/create" as bookmarks_create
+bookmarks_create: ブックマークの新規登録フォームを表示 (GET)
+bookmarks_create: ブックマークを新規登録 (POST)
+
+state "ブックマークのWebサイト" as external_site
+
+@enduml
