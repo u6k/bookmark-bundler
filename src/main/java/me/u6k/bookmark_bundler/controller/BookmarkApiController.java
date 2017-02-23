@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class BookmarkController {
+public class BookmarkApiController {
 
     private static final Logger L = LoggerFactory.getLogger(BookmarkService.class);
 
