@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <title>Add Bookmark</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></link>
+        <style>
+            body {
+                padding-top: 70px;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top" th:replace="navigation :: nav">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Bookmarks</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="bookmarks.html">All Bookmarks</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <h1 class="page-header">Add Bookmark</h1>
+            <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}">エラー</div>
+            <form role="form" action="bookmarks.html" method="post" th:action="@{/ui/bookmarks/create}" th:object="${form}">
+                <div class="form-group has-error" th:class="${#fields.hasErrors('name')}? 'form-group has-error' : 'form-group'">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Title" th:field="*{name}"></input>
+                    <span class="help-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">error</span>
+                </div>
+                <div class="form-group" th:class="${#fields.hasErrors('url')}? 'form-group has-error' : 'form-group'">
+                    <label for="url">URL</label>
+                    <input type="text" class="form-control" id="url" placeholder="http://example.com" th:field="*{url}"></input>
+                    <span class="help-block" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></span>
+                </div>
+                <button type="submit" class="btn btn-default">Add</button>
+            </form>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </body>
+</html>
