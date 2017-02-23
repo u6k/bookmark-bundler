@@ -3,10 +3,6 @@ machine:
     services:
         - docker
 
-dependencies:
-    override:
-        - mvn package site -Dmaven.test.skip=true -Dmaven.site.skip=true
-
 compile:
     pre:
         - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
@@ -18,7 +14,8 @@ compile:
 
 test:
     override:
-        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev mvn clean package site:site
+        - docker run -d --name postgres -e POSTGRES_PASSWORD=bookmark_pass -e POSTGRES_USER=bookmark_user -e POSTGRES_DB=bookmark_db postgres
+        - docker run --rm --link postgres:postgres -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev mvn clean package site:site
         - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev aglio -i src/site/api-blueprint/api-reference.md -o target/site/api-reference.html
         - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev java -jar /opt/bin/plantuml.jar -tsvg src/site/plantuml/sitemap.pu
         - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev mv src/site/plantuml/sitemap.svg target/site/images/sitemap.svg
