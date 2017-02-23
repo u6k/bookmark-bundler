@@ -3,10 +3,6 @@ machine:
     services:
         - docker
 
-dependencies:
-    override:
-        - mvn package site -Dmaven.test.skip=true -Dmaven.site.skip=true
-
 compile:
     pre:
         - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
