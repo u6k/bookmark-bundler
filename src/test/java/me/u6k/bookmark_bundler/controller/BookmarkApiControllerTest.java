@@ -34,9 +34,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(Enclosed.class)
-public class BookmarkControllerTest {
+public class BookmarkApiControllerTest {
 
-    private static final Logger L = LoggerFactory.getLogger(BookmarkControllerTest.class);
+    private static final Logger L = LoggerFactory.getLogger(BookmarkApiControllerTest.class);
 
     private static String buildJson(String name, String url) throws JsonProcessingException {
         BookmarkVO vo = new BookmarkVO();

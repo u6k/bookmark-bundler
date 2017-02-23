@@ -5,13 +5,16 @@ import me.u6k.bookmark_bundler.model.Bookmark;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class BookmarkVO {
 
     private String id;
 
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String url;
 
     public BookmarkVO() {
