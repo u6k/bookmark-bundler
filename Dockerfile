@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8-alpine
 MAINTAINER u6k.apps@gmail.com
 
 WORKDIR /opt
