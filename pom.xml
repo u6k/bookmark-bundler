@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.u6k.bookmark-bundler</groupId>
     <artifactId>bookmark-bundler</artifactId>
-    <version>0.5.1</version>
+    <version>0.5.2</version>
     <url>https://u6k.github.io/bookmark-bundler/</url>
 
     <issueManagement>
