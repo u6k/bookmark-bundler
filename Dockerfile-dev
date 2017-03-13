@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8
 MAINTAINER u6k.apps@gmail.com
 
 # Setup Apache Maven, Graphviz, aglio
