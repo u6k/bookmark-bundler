@@ -5,6 +5,8 @@ WORKDIR /opt
 
 COPY target/bookmark-bundler.jar .
 
+VOLUME /var/lib/bookmark/hsqldb
+
 EXPOSE 8080
 
 CMD ["java", "-jar", "/opt/bookmark-bundler.jar"]
