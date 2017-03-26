@@ -4,7 +4,7 @@
         <meta charset="UTF-8"></meta>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-        <title>Add Bookmark</title>
+        <title>Edit Bookmark</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></link>
         <style>
@@ -35,9 +35,9 @@
             </div>
         </nav>
         <div class="container-fluid">
-            <h1 class="page-header">Add Bookmark</h1>
+            <h1 class="page-header">Edit Bookmark</h1>
             <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}">エラー</div>
-            <form role="form" action="bookmarks.html" method="post" th:action="@{/ui/bookmarks/create}" th:object="${form}">
+            <form role="form" action="bookmarks.html" method="post" th:action="@{/ui/bookmarks/{id}/edit(id=*{id})}" th:object="${form}">
                 <div class="form-group has-error" th:class="${#fields.hasErrors('name')}? 'form-group has-error' : 'form-group'">
                     <label for="title">Title</label>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Title" th:field="*{name}"></input>

@@ -34,7 +34,7 @@ public class BookmarkService {
         }
 
         // URL重複チェック
-        int count = this.bookmarkRepo.countByUrl(url);
+        int count = this.bookmarkRepo.countDuplicateUrl(url);
         if (count > 0) {
             throw new BookmarkDuplicateException(url);
         }
@@ -73,7 +73,7 @@ public class BookmarkService {
         }
 
         // URL重複チェック
-        int count = this.bookmarkRepo.countByUrl(url);
+        int count = this.bookmarkRepo.countDuplicateUrlExcludeOwn(id, url);
         if (count > 0) {
             throw new BookmarkDuplicateException(url);
         }
