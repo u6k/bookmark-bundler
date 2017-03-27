@@ -83,4 +83,11 @@ public class BookmarkUiController {
         return "redirect:/ui/bookmarks";
     }
 
+    @RequestMapping(value = "/ui/bookmarks/{id}/delete", method = RequestMethod.POST)
+    public String delete(@PathVariable String id) {
+        this.service.delete(id);
+
+        return "redirect:/ui/bookmarks";
+    }
+
 }
