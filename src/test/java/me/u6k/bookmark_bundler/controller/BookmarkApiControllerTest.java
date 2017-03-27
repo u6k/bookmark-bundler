@@ -459,6 +459,41 @@ public class BookmarkApiControllerTest {
         }
 
         @Test
+        public void タイトルを変更するだけの場合は更新できる() throws Exception {
+            // 準備
+            String json = buildJson("テストサイト", this.b3.getUrl());
+
+            // 実行
+            ResultActions result = perform(this.mvc, put("/api/bookmarks/" + this.b3.getId())
+                            .contentType("application/json")
+                            .content(json));
+
+            // 結果確認
+            result.andExpect(status().isOk())
+                            .andExpect(content().contentType("application/json;charset=UTF-8"))
+                            .andExpect(jsonPath("$.id", is(this.b3.getId())))
+                            .andExpect(jsonPath("$.name", is("テストサイト")))
+                            .andExpect(jsonPath("$.url", is(this.b3.getUrl())));
+        }
+
+        @Test
+        public void 他のブックマークと同じURLに変更する場合は400() throws Exception {
+            // 準備
+            String json = buildJson(this.b3.getName(), this.b2.getUrl());
+
+            // 実行
+            ResultActions result = perform(this.mvc, put("/api/bookmarks/" + this.b3.getId())
+                            .contentType("application/json")
+                            .content(json));
+
+            // 結果確認
+            result.andExpect(status().isBadRequest())
+                            .andExpect(content().contentType("application/json;charset=UTF-8"))
+                            .andExpect(jsonPath("$.exception", is("me.u6k.bookmark_bundler.exception.BookmarkDuplicateException")))
+                            .andExpect(jsonPath("$.message", is("url=http://www.asahi.com/articles/ASK2941FKK29UTIL012.html is duplicated.")));
+        }
+
+        @Test
         public void name引数が空の場合は400_1() throws Exception {
             // 準備
             String json = buildJson(null, "http://news.livedoor.com/article/detail/12650086/");
@@ -578,32 +613,6 @@ public class BookmarkApiControllerTest {
                             .andExpect(content().contentType("application/json;charset=UTF-8"))
                             .andExpect(jsonPath("$.exception", is("me.u6k.bookmark_bundler.exception.BookmarkNotFoundException")))
                             .andExpect(jsonPath("$.message", is("id=" + id + " not found.")));
-
-            List<Bookmark> l = this.bookmarkRepo.findAll();
-
-            assertThat(l.size(), is(5));
-            assertThat(l.get(0), is(this.b5));
-            assertThat(l.get(1), is(this.b4));
-            assertThat(l.get(2), is(this.b3));
-            assertThat(l.get(3), is(this.b2));
-            assertThat(l.get(4), is(this.b1));
-        }
-
-        @Test
-        public void update_URLが重複した場合は400() throws Exception {
-            // 準備
-            String json = buildJson("Googleが「Android Wear2.0」の提供を開始 大規模な改善 - ライブドアニュース", this.b3.getUrl());
-
-            // 実行
-            ResultActions result = perform(this.mvc, put("/api/bookmarks/" + this.b3.getId())
-                            .contentType("application/json")
-                            .content(json));
-
-            // 結果確認
-            result.andExpect(status().isBadRequest())
-                            .andExpect(content().contentType("application/json;charset=UTF-8"))
-                            .andExpect(jsonPath("$.exception", is("me.u6k.bookmark_bundler.exception.BookmarkDuplicateException")))
-                            .andExpect(jsonPath("$.message", is("url=http://www.asahi.com/articles/ASK292TYJK29OIPE006.html is duplicated.")));
 
             List<Bookmark> l = this.bookmarkRepo.findAll();
 

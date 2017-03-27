@@ -20,14 +20,15 @@ docker run \
     u6kapps/bookmark-bundler-dev mvn eclipse:eclipse
 ```
 
-## テストを実行
+## 動作確認
 
 ```
 docker run \
     --rm \
+    -p 8080:8080 \
     -v $HOME/.m2:/root/.m2 \
     -v $(pwd):/var/my-app \
-    u6kapps/bookmark-bundler-dev mvn clean test
+    u6kapps/bookmark-bundler-dev mvn clean spring-boot:run
 ```
 
 ## 動作用イメージを作成

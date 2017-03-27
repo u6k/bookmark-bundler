@@ -37,10 +37,22 @@
         <div class="container-fluid">
             <h1 class="page-header">All Bookmarks</h1>
             <div class="list-group">
-                <a href="http://example.com" class="list-group-item" th:each="bookmark : ${bookmarks}" th:href="@{${bookmark.url}}">
-                    <h4 class="list-group-item-heading" th:text="${bookmark.name}">Page Title</h4>
-                    <p class="list-group-item-text" th:text="${bookmark.url}">http://example.com</p>
-                </a>
+                <div class="list-group-item" th:each="bookmark : ${bookmarks}">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <a href="http://example.com" th:href="@{${bookmark.url}}">
+                                <h4 th:text="${bookmark.name}">Page Title</h4>
+                                <small th:text="${bookmark.url}">http://example.com</small>
+                            </a>
+                        </div>
+                        <div class="col-md-1">
+                            <a href="#" class="btn btn-default" role="button" th:href="@{/ui/bookmarks/{id}/edit(id=${bookmark.id})}">Edit</a>
+                            <form role="form" action="bookmarks.html" method="post" th:action="@{/ui/bookmarks/{id}/delete(id=${bookmark.id})}" th:object="${form}">
+                                <button type="submit" class="btn btn-default">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -40,15 +41,51 @@ public class BookmarkUiController {
     @RequestMapping(value = "/ui/bookmarks/create", method = RequestMethod.POST)
     public String create(@Validated @ModelAttribute("form") BookmarkVO form, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return this.createInit(form, model);
+            return "bookmarks-create";
         }
 
         try {
             this.service.create(form.getName(), form.getUrl());
         } catch (BusinessException e) {
             model.addAttribute("error", e.getMessage());
-            return this.createInit(form, model);
+            return "bookmarks-create";
         }
+
+        return "redirect:/ui/bookmarks";
+    }
+
+    @RequestMapping(value = "/ui/bookmarks/{id}/edit", method = RequestMethod.GET)
+    public String editInit(@PathVariable String id, @ModelAttribute("form") BookmarkVO form, Model model) {
+        Bookmark bookmark = this.service.findOne(id);
+        if (bookmark == null) {
+            throw new IllegalArgumentException("bookmark not found. id=" + id);
+        }
+
+        form.setName(bookmark.getName());
+        form.setUrl(bookmark.getUrl());
+
+        return "bookmarks-edit";
+    }
+
+    @RequestMapping(value = "/ui/bookmarks/{id}/edit", method = RequestMethod.POST)
+    public String edit(@PathVariable String id, @ModelAttribute("form") BookmarkVO form, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "bookmarks-edit";
+        }
+
+        try {
+            this.service.update(id, form.getName(), form.getUrl());
+        } catch (BusinessException e) {
+            model.addAttribute("error", e.getMessage());
+            return "bookmarks-edit";
+        }
+
+        return "redirect:/ui/bookmarks";
+    }
+
+    @RequestMapping(value = "/ui/bookmarks/{id}/delete", method = RequestMethod.POST)
+    public String delete(@PathVariable String id) {
+        this.service.delete(id);
 
         return "redirect:/ui/bookmarks";
     }

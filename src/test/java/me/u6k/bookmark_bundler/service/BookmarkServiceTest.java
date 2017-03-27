@@ -384,6 +384,36 @@ public class BookmarkServiceTest {
         }
 
         @Test
+        public void タイトルを変更するだけの場合は更新できる() {
+            // URL重複でエラーにならない。
+
+            // 実行
+            Bookmark result = this.bookmarkService.update(this.b3.getId(), "テストサイト", this.b3.getUrl());
+
+            // 結果確認
+            assertThat(result.getId(), is(this.b3.getId()));
+            assertThat(result.getName(), is("テストサイト"));
+            assertThat(result.getUrl(), is(this.b3.getUrl()));
+        }
+
+        @Test
+        public void 他のブックマークと同じURLに変更する場合はBookmarkDuplicateException() {
+            try {
+                // 実行
+                this.bookmarkService.update(this.b3.getId(), this.b3.getName(), this.b2.getUrl());
+
+                fail();
+            } catch (BookmarkDuplicateException e) {
+                // 結果確認
+                assertThat(e.getMessage(), is("url=http://www.asahi.com/articles/ASK2941FKK29UTIL012.html is duplicated."));
+            }
+
+            List<Bookmark> l = this.bookmarkRepo.findAll();
+
+            assertThat(l.get(2), is(this.b3));
+        }
+
+        @Test
         public void id引数が空の場合はIllegalArgumentException_1() {
             // 準備
             String name = "テスト　サイト";
@@ -512,24 +542,6 @@ public class BookmarkServiceTest {
             } catch (BookmarkNotFoundException e) {
                 // 結果確認
                 assertThat(e.getMessage(), is("id=" + id + " not found."));
-            }
-
-            assertThat(this.bookmarkRepo.count(), is(5L));
-        }
-
-        @Test
-        public void URLが重複した場合はBookmarkDuplicateException() {
-            // 準備
-            String name = "テスト　サイト";
-
-            try {
-                // 実行
-                this.bookmarkService.update(this.b3.getId(), name, this.b3.getUrl());
-
-                fail();
-            } catch (BookmarkDuplicateException e) {
-                // 結果確認
-                assertThat(e.getMessage(), is("url=http://www.asahi.com/articles/ASK292TYJK29OIPE006.html is duplicated."));
             }
 
             assertThat(this.bookmarkRepo.count(), is(5L));
