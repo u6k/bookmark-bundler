@@ -4,21 +4,18 @@ machine:
         - docker
 
 compile:
-    pre:
-        - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-        - docker pull u6kapps/bookmark-bundler-dev || true
     override:
-        - docker build -t u6kapps/bookmark-bundler-dev -f Dockerfile-dev .
-    post:
-        - docker push u6kapps/bookmark-bundler-dev
+        - docker build -t bookmark-bundler-dev -f Dockerfile-dev .
+        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 bookmark-bundler-dev mvn clean compile
 
 test:
     override:
-        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev mvn clean package site:site
-        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev aglio -i src/site/api-blueprint/api-reference.md -o target/site/api-reference.html
-        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev java -jar /opt/bin/plantuml.jar -tsvg src/site/plantuml/sitemap.pu
-        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev mv src/site/plantuml/sitemap.svg target/site/images/sitemap.svg
-        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 u6kapps/bookmark-bundler-dev mvn site:jar
+        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 bookmark-bundler-dev mvn package site:site
+        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 bookmark-bundler-dev aglio -i src/site/api-blueprint/api-reference.md -o target/site/api-reference.html
+        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 bookmark-bundler-dev java -jar /opt/bin/plantuml.jar -tsvg src/site/plantuml/sitemap.pu
+        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 bookmark-bundler-dev mv src/site/plantuml/sitemap.svg target/site/images/sitemap.svg
+        - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 bookmark-bundler-dev mvn site:jar
+        - docker build -t u6kapps/bookmark-bundler .
     post:
         - cp -r target/surefire-reports/* $CIRCLE_TEST_REPORTS/
         - cp -r target/* $CIRCLE_ARTIFACTS/
@@ -27,6 +24,6 @@ deployment:
     release:
         tag: /.+/
         commands:
-            - docker build -t u6kapps/bookmark-bundler .
+            - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
             - docker tag u6kapps/bookmark-bundler u6kapps/bookmark-bundler:$CIRCLE_TAG
             - docker push u6kapps/bookmark-bundler
