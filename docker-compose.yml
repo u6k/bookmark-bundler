@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+    bookmark:
+        image: u6kapps/bookmark-bundler
+        volumes:
+            - "${DOCKER_VOLUMES}/bookmark/hsqldb:/var/lib/bookmark/hsqldb"
+        environment:
+            - "VIRTUAL_HOST=bookmark.u6k.me"
+            - "VIRTUAL_PORT=8080"
+            - "LETSENCRYPT_HOST=bookmark.u6k.me"
+            - "LETSENCRYPT_EMAIL=u6k.apps@gmail.com"
+        restart: always
+
+networks:
+    default:
+        external:
+            name: nginxproxy_default
