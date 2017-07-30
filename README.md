@@ -52,10 +52,5 @@ docker build -t u6kapps/bookmark-bundler .
 ## 実行
 
 ```
-docker run \
-    -d \
-    --name bookmark \
-    -v $HOME/docker/bookmark/hsqldb:/var/lib/bookmark/hsqldb \
-    -p 8080:8080 \
-    u6kapps/bookmark-bundler
+docker-compose up -d
 ```
