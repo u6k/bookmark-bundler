@@ -1,6 +1,6 @@
 # bookmark-bundler
 
-[![CircleCI](https://img.shields.io/circleci/project/github/u6k/bookmark-bundler.svg)](https://circleci.com/gh/u6k/blog)
+[![CircleCI](https://img.shields.io/circleci/project/github/u6k/bookmark-bundler.svg)](https://circleci.com/gh/u6k/bookmark-bundler)
 [![license](https://img.shields.io/github/license/u6k/bookmark-bundler.svg)](https://github.com/u6k/bookmark-bundler/blob/master/LICENSE)
 [![GitHub tag](https://img.shields.io/github/tag/u6k/bookmark-bundler.svg)](https://github.com/u6k/bookmark-bundler/releases)
 [![Docker Pulls](https://img.shields.io/docker/pulls/u6kapps/bookmark-bundler.svg)](https://hub.docker.com/r/u6kapps/bookmark-bundler/)
