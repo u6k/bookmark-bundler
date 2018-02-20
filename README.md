@@ -1,9 +1,10 @@
 # bookmark-bundler
 
-[![CircleCI](https://img.shields.io/circleci/project/github/u6k/bookmark-bundler.svg)](https://circleci.com/gh/u6k/bookmark-bundler)
+[![Travis](https://img.shields.io/travis/u6k/bookmark-bundler.svg)](https://travis-ci.org/u6k/bookmark-bundler)
+[![GitHub release](https://img.shields.io/github/release/u6k/bookmark-bundler.svg)](https://github.com/u6k/bookmark-bundler/releases)
 [![license](https://img.shields.io/github/license/u6k/bookmark-bundler.svg)](https://github.com/u6k/bookmark-bundler/blob/master/LICENSE)
-[![GitHub tag](https://img.shields.io/github/tag/u6k/bookmark-bundler.svg)](https://github.com/u6k/bookmark-bundler/releases)
-[![Docker Pulls](https://img.shields.io/docker/pulls/u6kapps/bookmark-bundler.svg)](https://hub.docker.com/r/u6kapps/bookmark-bundler/)
+[![Docker Stars](https://img.shields.io/docker/stars/u6kapps/bookmark-bundler.svg)](https://hub.docker.com/r/u6kapps/bookmark-bundler/)
+[![project-reports](https://img.shields.io/badge/site-project--reports-orange.svg)](https://u6k.github.io/bookmark-bundler/project-reports.html)
 
 ブックマークを束ねる(管理する)サービスを構築します。
 

@@ -1,0 +1,33 @@
+sudo: required
+language: java
+
+services:
+    - docker
+
+before_install:
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    - sudo apt-get update
+    - sudo apt-get -y install docker-ce
+
+script:
+    # develop build
+    - docker build -t bookmark-bundler-dev -f Dockerfile-dev .
+    - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 bookmark-bundler-dev mvn clean package
+    # test, document
+    - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 bookmark-bundler-dev mvn site:site
+    - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 bookmark-bundler-dev aglio -i src/site/api-blueprint/api-reference.md -o target/site/api-reference.html
+    - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 bookmark-bundler-dev java -jar /opt/bin/plantuml.jar -tsvg src/site/plantuml/sitemap.pu
+    - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 bookmark-bundler-dev mv src/site/plantuml/sitemap.svg target/site/images/sitemap.svg
+    - docker run --rm -v $(pwd):/var/my-app -v ~/.m2:/root/.m2 bookmark-bundler-dev mvn site:jar
+    # build
+    - docker build -t u6kapps/bookmark-bundler .
+
+after_success:
+    - if [ -n "$TRAVIS_TAG" ]; then
+          docker login -u "$DOCKER_USER" -p "$DOCKER_PASS";
+          docker tag u6kapps/bookmark-bundler u6kapps/bookmark-bundler:$TRAVIS_TAG;
+          docker push u6kapps/bookmark-bundler;
+      else
+          echo skip docker push;
+      fi
